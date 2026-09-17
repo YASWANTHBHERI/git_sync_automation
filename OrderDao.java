@@ -27,7 +27,6 @@ public class OrderDao {
         System.out.println("sql created.")
 
         PreparedStatement stmt = conn.prepareStatement(sql);
-        S=
         stmt.setInt(1, customerId);
         ResultSet rs = stmt.executeQuery();
 
