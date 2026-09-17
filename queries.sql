@@ -2,8 +2,9 @@
 -- Pine Labs Credit Modernization
 -- Updated by Pine Labs team on master
 
--- Get customer transactions with date filter
--- Added new columns: transaction_type, reference_id
+-- Get customer transactions
+-- Pine Labs added: transaction_type, reference_id, currency
+-- CONFLICTS with mod-release which added: credit_score, credit_limit
 SELECT
     t.transaction_id,
     t.amount,
@@ -18,7 +19,8 @@ ORDER BY t.created_at DESC
 LIMIT 100;
 
 -- Get account balance summary
--- Added currency column
+-- Pine Labs added: currency column
+-- CONFLICTS with mod-release which added: credit_limit column
 SELECT
     account_id,
     COALESCE(balance, 0.00) AS balance,
