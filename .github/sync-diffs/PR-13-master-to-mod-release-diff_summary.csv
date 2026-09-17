@@ -1,0 +1,350 @@
+file,change_type,line_number,content,conflict
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,1,"file,change_type,line_number,content,conflict",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,2,".github/workflows/sync.yml,REMOVAL,4,# CONFIGURATION — set your defaults here,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,3,".github/workflows/sync.yml,REMOVAL,5,# All values can be overridden at runtime via workflow_dispatch inputs,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,4,".github/workflows/sync.yml,REMOVAL,6,# ─────────────────────────────────────────────────────────────────────────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,5,".github/workflows/sync.yml,REMOVAL,7,# from_branch   : branch changes come FROM (e.g. master),false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,6,".github/workflows/sync.yml,REMOVAL,8,# to_branch     : branch changes go INTO  (e.g. release),false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,7,".github/workflows/sync.yml,REMOVAL,9,# csv_branch    : branch where diff_summary.csv is committed (e.g. release),false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,8,".github/workflows/sync.yml,REMOVAL,10,""# notify_users  : comma-separated GitHub usernames to notify (e.g. user1,user2)"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,9,".github/workflows/sync.yml,ADDITION,4,# CONFIGURATION — all branch names and settings come from GitHub Repo Variables,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,10,".github/workflows/sync.yml,ADDITION,5,# No hardcoded values anywhere in this file.,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,11,".github/workflows/sync.yml,ADDITION,6,#,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,12,".github/workflows/sync.yml,ADDITION,7,# Required setup (one time):,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,13,".github/workflows/sync.yml,ADDITION,8,#   GitHub repo → Settings → Secrets and variables → Actions → Variables tab,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,14,".github/workflows/sync.yml,ADDITION,9,#,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,15,".github/workflows/sync.yml,ADDITION,10,#   Variable Name    Description                        Example,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,16,".github/workflows/sync.yml,ADDITION,11,#   ─────────────    ─────────────────────────────────  ──────────────────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,17,".github/workflows/sync.yml,ADDITION,12,#   FROM_BRANCH      Branch changes come FROM           master,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,18,".github/workflows/sync.yml,ADDITION,13,#   TO_BRANCH        Branch changes go INTO             mod-release,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,19,".github/workflows/sync.yml,ADDITION,14,#   CSV_BRANCH       Branch where CSV is committed      mod-release,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,20,".github/workflows/sync.yml,ADDITION,15,""#   NOTIFY_USERS     Comma-separated GitHub usernames   user1,user2"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,21,".github/workflows/sync.yml,ADDITION,16,#,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,22,".github/workflows/sync.yml,ADDITION,17,# To change branches or notify users:,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,23,".github/workflows/sync.yml,ADDITION,18,""#   Just update the variables on GitHub — no code change, no push needed."",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,24,".github/workflows/sync.yml,REMOVAL,14,  # ── Automatic: fires when a PR is merged ──────────────────────────────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,25,".github/workflows/sync.yml,ADDITION,22,  # ── Automatic: fires when a PR is merged into any branch ──────────────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,26,".github/workflows/sync.yml,REMOVAL,19,  # ── Manual: trigger for any branch combination ────────────────────────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,27,".github/workflows/sync.yml,ADDITION,27,  # ── Manual: override any variable for a single run ────────────────────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,28,".github/workflows/sync.yml,REMOVAL,23,        description: 'Source branch (changes come FROM here)',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,29,".github/workflows/sync.yml,REMOVAL,24,        required: true,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,30,".github/workflows/sync.yml,REMOVAL,25,        default: 'master',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,31,".github/workflows/sync.yml,ADDITION,31,        description: 'Source branch — leave blank to use FROM_BRANCH repo variable',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,32,".github/workflows/sync.yml,ADDITION,32,        required: false,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,33,".github/workflows/sync.yml,ADDITION,33,        default: '',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,34,".github/workflows/sync.yml,REMOVAL,27,        description: 'Target branch (changes go INTO here)',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,35,".github/workflows/sync.yml,REMOVAL,28,        required: true,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,36,".github/workflows/sync.yml,REMOVAL,29,        default: 'mod-release',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,37,".github/workflows/sync.yml,ADDITION,35,        description: 'Target branch — leave blank to use TO_BRANCH repo variable',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,38,".github/workflows/sync.yml,ADDITION,36,        required: false,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,39,".github/workflows/sync.yml,ADDITION,37,        default: '',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,40,".github/workflows/sync.yml,REMOVAL,31,        description: 'Branch where diff_summary.csv will be committed',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,41,".github/workflows/sync.yml,REMOVAL,32,        required: true,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,42,".github/workflows/sync.yml,REMOVAL,33,        default: 'mod-release',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,43,".github/workflows/sync.yml,ADDITION,39,        description: 'CSV branch — leave blank to use CSV_BRANCH repo variable',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,44,".github/workflows/sync.yml,ADDITION,40,        required: false,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,45,".github/workflows/sync.yml,ADDITION,41,        default: '',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,46,".github/workflows/sync.yml,REMOVAL,35,""        description: 'GitHub usernames to notify — comma separated (e.g. user1,user2)'"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,47,".github/workflows/sync.yml,ADDITION,43,        description: 'Notify users — leave blank to use NOTIFY_USERS repo variable',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,48,".github/workflows/sync.yml,REMOVAL,37,        default: 'YASWANTHBHERI',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,49,".github/workflows/sync.yml,ADDITION,45,        default: '',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,50,".github/workflows/sync.yml,REMOVAL,41,""    # For automatic trigger: only run when PR is actually merged, not just closed"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,51,".github/workflows/sync.yml,ADDITION,49,""    # Only run when PR is actually merged, not just closed"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,52,".github/workflows/sync.yml,REMOVAL,48,    # ── Environment variables — edit these defaults for your project ──────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,53,".github/workflows/sync.yml,REMOVAL,49,    env:,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,54,".github/workflows/sync.yml,REMOVAL,50,      DEFAULT_FROM_BRANCH: 'master',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,55,".github/workflows/sync.yml,REMOVAL,51,      DEFAULT_TO_BRANCH: 'mod-release',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,56,".github/workflows/sync.yml,REMOVAL,52,      DEFAULT_CSV_BRANCH: 'mod-release',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,57,".github/workflows/sync.yml,REMOVAL,53,      DEFAULT_NOTIFY_USERS: 'YASWANTHBHERI'   # ← replace with your team's GitHub usernames,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,58,".github/workflows/sync.yml,REMOVAL,54,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,59,".github/workflows/sync.yml,REMOVAL,56,      # ── Step 1: Resolve all configurable inputs ──────────────────────────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,60,".github/workflows/sync.yml,ADDITION,57,      # ── Step 1: Resolve inputs ────────────────────────────────────────────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,61,".github/workflows/sync.yml,ADDITION,58,      # Priority: workflow_dispatch input → GitHub repo variable,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,62,".github/workflows/sync.yml,ADDITION,59,      # If neither is set the step will fail with a clear error message,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,63,".github/workflows/sync.yml,ADDITION,63,          # Resolve from_branch,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,64,".github/workflows/sync.yml,ADDITION,64,""          if [ -n """"${{ github.event.inputs.from_branch }}"""" ]; then"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,65,".github/workflows/sync.yml,ADDITION,65,""            FROM=""""${{ github.event.inputs.from_branch }}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,66,".github/workflows/sync.yml,ADDITION,66,""          elif [ -n """"${{ vars.FROM_BRANCH }}"""" ]; then"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,67,".github/workflows/sync.yml,ADDITION,67,""            FROM=""""${{ vars.FROM_BRANCH }}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,68,".github/workflows/sync.yml,ADDITION,68,          else,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,69,".github/workflows/sync.yml,ADDITION,69,""            echo """"❌ ERROR: FROM_BRANCH is not set."""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,70,".github/workflows/sync.yml,ADDITION,70,""            echo """"   Go to: Settings → Secrets and variables → Actions → Variables"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,71,".github/workflows/sync.yml,ADDITION,71,""            echo """"   Add variable: FROM_BRANCH = <your branch name>"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,72,".github/workflows/sync.yml,ADDITION,72,            exit 1,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,73,".github/workflows/sync.yml,ADDITION,73,          fi,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,74,".github/workflows/sync.yml,ADDITION,74,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,75,".github/workflows/sync.yml,ADDITION,75,          # Resolve to_branch,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,76,".github/workflows/sync.yml,ADDITION,76,""          if [ -n """"${{ github.event.inputs.to_branch }}"""" ]; then"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,77,".github/workflows/sync.yml,ADDITION,77,""            TO=""""${{ github.event.inputs.to_branch }}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,78,".github/workflows/sync.yml,ADDITION,78,""          elif [ -n """"${{ vars.TO_BRANCH }}"""" ]; then"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,79,".github/workflows/sync.yml,ADDITION,79,""            TO=""""${{ vars.TO_BRANCH }}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,80,".github/workflows/sync.yml,ADDITION,80,          else,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,81,".github/workflows/sync.yml,ADDITION,81,""            echo """"❌ ERROR: TO_BRANCH is not set."""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,82,".github/workflows/sync.yml,ADDITION,82,""            echo """"   Go to: Settings → Secrets and variables → Actions → Variables"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,83,".github/workflows/sync.yml,ADDITION,83,""            echo """"   Add variable: TO_BRANCH = <your branch name>"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,84,".github/workflows/sync.yml,ADDITION,84,            exit 1,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,85,".github/workflows/sync.yml,ADDITION,85,          fi,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,86,".github/workflows/sync.yml,ADDITION,86,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,87,".github/workflows/sync.yml,ADDITION,87,          # Resolve csv_branch,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,88,".github/workflows/sync.yml,ADDITION,88,""          if [ -n """"${{ github.event.inputs.csv_branch }}"""" ]; then"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,89,".github/workflows/sync.yml,ADDITION,89,""            CSV=""""${{ github.event.inputs.csv_branch }}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,90,".github/workflows/sync.yml,ADDITION,90,""          elif [ -n """"${{ vars.CSV_BRANCH }}"""" ]; then"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,91,".github/workflows/sync.yml,ADDITION,91,""            CSV=""""${{ vars.CSV_BRANCH }}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,92,".github/workflows/sync.yml,ADDITION,92,          else,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,93,".github/workflows/sync.yml,ADDITION,93,""            echo """"❌ ERROR: CSV_BRANCH is not set."""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,94,".github/workflows/sync.yml,ADDITION,94,""            echo """"   Go to: Settings → Secrets and variables → Actions → Variables"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,95,".github/workflows/sync.yml,ADDITION,95,""            echo """"   Add variable: CSV_BRANCH = <your branch name>"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,96,".github/workflows/sync.yml,ADDITION,96,            exit 1,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,97,".github/workflows/sync.yml,ADDITION,97,          fi,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,98,".github/workflows/sync.yml,ADDITION,98,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,99,".github/workflows/sync.yml,ADDITION,99,          # Resolve notify_users (optional — empty is allowed),false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,100,".github/workflows/sync.yml,ADDITION,100,""          if [ -n """"${{ github.event.inputs.notify_users }}"""" ]; then"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,101,".github/workflows/sync.yml,ADDITION,101,""            NOTIFY=""""${{ github.event.inputs.notify_users }}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,102,".github/workflows/sync.yml,ADDITION,102,          else,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,103,".github/workflows/sync.yml,ADDITION,103,""            NOTIFY=""""${{ vars.NOTIFY_USERS }}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,104,".github/workflows/sync.yml,ADDITION,104,          fi,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,105,".github/workflows/sync.yml,ADDITION,105,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,106,".github/workflows/sync.yml,ADDITION,106,          # Resolve PR number,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,107,".github/workflows/sync.yml,REMOVAL,61,""            echo """"from_branch=${{ github.event.inputs.from_branch }}"""" >> $GITHUB_OUTPUT"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,108,".github/workflows/sync.yml,REMOVAL,62,""            echo """"to_branch=${{ github.event.inputs.to_branch }}""""     >> $GITHUB_OUTPUT"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,109,".github/workflows/sync.yml,REMOVAL,63,""            echo """"csv_branch=${{ github.event.inputs.csv_branch }}""""   >> $GITHUB_OUTPUT"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,110,".github/workflows/sync.yml,REMOVAL,64,""            echo """"notify_users=${{ github.event.inputs.notify_users }}"""" >> $GITHUB_OUTPUT"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,111,".github/workflows/sync.yml,REMOVAL,65,""            echo """"pr_number=manual-$(date +%s)""""                       >> $GITHUB_OUTPUT"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,112,".github/workflows/sync.yml,ADDITION,108,""            PR=""""manual-$(date +%s)"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,113,".github/workflows/sync.yml,REMOVAL,67,""            echo """"from_branch=${{ github.event.pull_request.base.ref }}"""" >> $GITHUB_OUTPUT"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,114,".github/workflows/sync.yml,REMOVAL,68,""            echo """"to_branch=${DEFAULT_TO_BRANCH}""""                         >> $GITHUB_OUTPUT"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,115,".github/workflows/sync.yml,REMOVAL,69,""            echo """"csv_branch=${DEFAULT_CSV_BRANCH}""""                       >> $GITHUB_OUTPUT"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,116,".github/workflows/sync.yml,REMOVAL,70,""            echo """"notify_users=${DEFAULT_NOTIFY_USERS}""""                   >> $GITHUB_OUTPUT"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,117,".github/workflows/sync.yml,REMOVAL,71,""            echo """"pr_number=${{ github.event.pull_request.number }}""""      >> $GITHUB_OUTPUT"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,118,".github/workflows/sync.yml,ADDITION,110,""            PR=""""${{ github.event.pull_request.number }}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,119,".github/workflows/sync.yml,ADDITION,113,""          echo """"from_branch=${FROM}""""    >> $GITHUB_OUTPUT"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,120,".github/workflows/sync.yml,ADDITION,114,""          echo """"to_branch=${TO}""""        >> $GITHUB_OUTPUT"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,121,".github/workflows/sync.yml,ADDITION,115,""          echo """"csv_branch=${CSV}""""      >> $GITHUB_OUTPUT"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,122,".github/workflows/sync.yml,ADDITION,116,""          echo """"notify_users=${NOTIFY}"""" >> $GITHUB_OUTPUT"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,123,".github/workflows/sync.yml,ADDITION,117,""          echo """"pr_number=${PR}""""        >> $GITHUB_OUTPUT"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,124,".github/workflows/sync.yml,ADDITION,118,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,125,".github/workflows/sync.yml,ADDITION,119,""          echo """"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,126,".github/workflows/sync.yml,ADDITION,120,""          echo """" Resolved config:"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,127,".github/workflows/sync.yml,ADDITION,121,""          echo """"  from_branch  = ${FROM}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,128,".github/workflows/sync.yml,ADDITION,122,""          echo """"  to_branch    = ${TO}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,129,".github/workflows/sync.yml,ADDITION,123,""          echo """"  csv_branch   = ${CSV}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,130,".github/workflows/sync.yml,ADDITION,124,""          echo """"  notify_users = ${NOTIFY}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,131,".github/workflows/sync.yml,ADDITION,125,""          echo """"  pr_number    = ${PR}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,132,".github/workflows/sync.yml,ADDITION,126,""          echo """"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,133,".github/workflows/sync.yml,ADDITION,127,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,134,".github/workflows/sync.yml,REMOVAL,87,""      # ── Step 4: Run sync script — fetch, simulate, generate CSV ──────────────"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,135,".github/workflows/sync.yml,ADDITION,141,      # ── Step 4: Ensure required labels exist ──────────────────────────────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,136,".github/workflows/sync.yml,ADDITION,142,      - name: Ensure labels exist,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,137,".github/workflows/sync.yml,ADDITION,143,        env:,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,138,".github/workflows/sync.yml,ADDITION,144,          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }},false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,139,".github/workflows/sync.yml,ADDITION,145,        run: |,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,140,".github/workflows/sync.yml,ADDITION,146,""          gh label create """"sync-success""""  --color """"0075ca"""" --description """"Branch sync completed successfully""""          2>/dev/null || true"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,141,".github/workflows/sync.yml,ADDITION,147,""          gh label create """"sync-conflict"""" --color """"e4e669"""" --description """"Branch sync conflict — manual review needed""""  2>/dev/null || true"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,142,".github/workflows/sync.yml,ADDITION,148,""          echo """"✅ Labels ready"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,143,".github/workflows/sync.yml,ADDITION,149,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,144,".github/workflows/sync.yml,ADDITION,150,""      # ── Step 5: Run sync script — fetch, simulate, generate CSV ──────────────"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,145,".github/workflows/sync.yml,REMOVAL,95,      # ── Step 5: Check for changes and read conflict flag ─────────────────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,146,".github/workflows/sync.yml,ADDITION,158,      # ── Step 6: Check for changes and read conflict flag ─────────────────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,147,".github/workflows/sync.yml,REMOVAL,99,          # Check if CSV has actual content beyond the header,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,148,".github/workflows/sync.yml,REMOVAL,106,          # Read conflict flag,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,149,".github/workflows/sync.yml,REMOVAL,114,      # ── Step 6a: CLEAN PATH — merge directly into to_branch ──────────────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,150,".github/workflows/sync.yml,ADDITION,175,      # ── Step 7a: CLEAN PATH — merge directly into to_branch ──────────────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,151,".github/workflows/sync.yml,REMOVAL,134,      # ── Step 6b: CONFLICT PATH — raise a PR ──────────────────────────────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,152,".github/workflows/sync.yml,ADDITION,195,      # ── Step 7b: CONFLICT PATH — raise PR directly between the two branches ───,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,153,".github/workflows/sync.yml,ADDITION,196,      # No new branch created — PR raised directly from from_branch → to_branch,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,154,".github/workflows/sync.yml,ADDITION,198,        continue-on-error: true,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,155,".github/workflows/sync.yml,REMOVAL,147,""          git config user.email """"github-actions[bot]@users.noreply.github.com"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,156,".github/workflows/sync.yml,REMOVAL,148,""          git config user.name  """"github-actions[bot]"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,157,".github/workflows/sync.yml,REMOVAL,149,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,158,".github/workflows/sync.yml,REMOVAL,150,          # Create a sync branch from the target branch,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,159,".github/workflows/sync.yml,REMOVAL,151,""          SYNC_BRANCH=""""sync/${FROM}-to-${TO}-PR-${PR}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,160,".github/workflows/sync.yml,REMOVAL,152,          git checkout ${TO},false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,161,".github/workflows/sync.yml,REMOVAL,153,          git checkout -b ${SYNC_BRANCH},false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,162,".github/workflows/sync.yml,REMOVAL,154,          git push origin ${SYNC_BRANCH},false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,163,".github/workflows/sync.yml,REMOVAL,155,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,164,".github/workflows/sync.yml,REMOVAL,156,          # Build reviewer mentions for PR body,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,165,".github/workflows/sync.yml,ADDITION,210,          # Build @mention string,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,166,".github/workflows/sync.yml,REMOVAL,161,""            if [ -n """"$USER"""" ]; then"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,167,".github/workflows/sync.yml,REMOVAL,162,""              MENTIONS=""""${MENTIONS} @${USER}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,168,".github/workflows/sync.yml,REMOVAL,163,            fi,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,169,".github/workflows/sync.yml,ADDITION,215,""            [ -n """"$USER"""" ] && MENTIONS=""""${MENTIONS} @${USER}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,170,".github/workflows/sync.yml,REMOVAL,166,          # Create PR with conflict details,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,171,".github/workflows/sync.yml,REMOVAL,167,          gh pr create \,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,172,".github/workflows/sync.yml,ADDITION,218,          # Build conflicting files list from CSV,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,173,".github/workflows/sync.yml,ADDITION,219,          CONFLICT_FILES=$(cat diff_summary.csv \,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,174,".github/workflows/sync.yml,ADDITION,220,""            | awk -F',' 'NR>1 {print $1}' \"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,175,".github/workflows/sync.yml,ADDITION,221,            | sort -u \,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,176,".github/workflows/sync.yml,ADDITION,222,            | sed 's/^/- /'),false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,177,".github/workflows/sync.yml,ADDITION,223,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,178,".github/workflows/sync.yml,ADDITION,224,          # Check if a PR already exists between these two branches,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,179,".github/workflows/sync.yml,ADDITION,225,          EXISTING_PR=$(gh pr list \,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,180,".github/workflows/sync.yml,REMOVAL,169,""            --head """"${SYNC_BRANCH}"""" \"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,181,".github/workflows/sync.yml,REMOVAL,170,""            --title """"⚠️ CONFLICT: ${FROM} → ${TO} (PR #${PR}) — Manual review required"""" \"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,182,".github/workflows/sync.yml,REMOVAL,171,""            --body """"## ⚠️ Conflict Detected: \`${FROM}\` → \`${TO}\`"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,183,".github/workflows/sync.yml,ADDITION,227,""            --head """"${FROM}"""" \"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,184,".github/workflows/sync.yml,ADDITION,228,            --state open \,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,185,".github/workflows/sync.yml,ADDITION,229,            --json number \,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,186,".github/workflows/sync.yml,ADDITION,230,""            --jq '.[0].number' 2>/dev/null || echo """""""")"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,187,".github/workflows/sync.yml,ADDITION,231,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,188,".github/workflows/sync.yml,ADDITION,232,""          if [ -n """"${EXISTING_PR}"""" ]; then"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,189,".github/workflows/sync.yml,ADDITION,233,""            echo """"ℹ️ Conflict PR already exists: #${EXISTING_PR} — skipping creation"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,190,".github/workflows/sync.yml,ADDITION,234,          else,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,191,".github/workflows/sync.yml,ADDITION,235,            gh pr create \,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,192,".github/workflows/sync.yml,ADDITION,236,""              --base """"${TO}"""" \"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,193,".github/workflows/sync.yml,ADDITION,237,""              --head """"${FROM}"""" \"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,194,".github/workflows/sync.yml,ADDITION,238,""              --title """"⚠️ CONFLICT: ${FROM} → ${TO} (PR #${PR})"""" \"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,195,".github/workflows/sync.yml,ADDITION,239,""              --body """"## ⚠️ Conflict Detected: \`${FROM}\` → \`${TO}\`"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,196,".github/workflows/sync.yml,REMOVAL,173,          **Source PR:** #${PR},false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,197,".github/workflows/sync.yml,ADDITION,241,          **Triggered by:** PR #${PR},false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,198,".github/workflows/sync.yml,REMOVAL,179,          GitHub Actions attempted to merge \`${FROM}\` into \`${TO}\` but detected conflicts.,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,199,".github/workflows/sync.yml,REMOVAL,180,          The merge was aborted. No changes have been made to \`${TO}\`.,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,200,".github/workflows/sync.yml,ADDITION,247,          GitHub Actions detected conflicts when trying to merge \`${FROM}\` into \`${TO}\`.,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,201,".github/workflows/sync.yml,ADDITION,248,          No changes were made to \`${TO}\`.,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,202,".github/workflows/sync.yml,ADDITION,249,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,203,".github/workflows/sync.yml,ADDITION,250,          ## Conflicting files,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,204,".github/workflows/sync.yml,ADDITION,251,          ${CONFLICT_FILES},false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,205,".github/workflows/sync.yml,ADDITION,252,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,206,".github/workflows/sync.yml,ADDITION,253,          ---,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,207,".github/workflows/sync.yml,REMOVAL,182,          ## What you need to do,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,208,".github/workflows/sync.yml,ADDITION,255,          ## Steps to resolve,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,209,".github/workflows/sync.yml,REMOVAL,187,          # resolve conflicts in the files shown below,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,210,".github/workflows/sync.yml,ADDITION,260,          # resolve conflicts in the files listed above,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,211,".github/workflows/sync.yml,REMOVAL,189,          git commit,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,212,".github/workflows/sync.yml,ADDITION,262,          git commit -m 'fix: resolve merge conflicts from ${FROM}',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,213,".github/workflows/sync.yml,REMOVAL,193,          ## Changed files (see diff_summary.csv for full breakdown),false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,214,".github/workflows/sync.yml,REMOVAL,194,""          $(cat diff_summary.csv | awk -F',' 'NR>1 {print $1}' | sort -u | sed 's/^/- /')"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,215,".github/workflows/sync.yml,REMOVAL,195,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,216,".github/workflows/sync.yml,REMOVAL,197,          Reviewers: ${MENTIONS},false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,217,".github/workflows/sync.yml,ADDITION,267,          ${MENTIONS},false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,218,".github/workflows/sync.yml,REMOVAL,199,""          *This PR was created automatically by Git Sync Automation.*"""" \"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,219,".github/workflows/sync.yml,REMOVAL,200,""            --label """"conflict,needs-review"""" 2>/dev/null || \"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,220,".github/workflows/sync.yml,REMOVAL,201,          gh pr create \,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,221,".github/workflows/sync.yml,REMOVAL,202,""            --base """"${TO}"""" \"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,222,".github/workflows/sync.yml,REMOVAL,203,""            --head """"${SYNC_BRANCH}"""" \"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,223,".github/workflows/sync.yml,REMOVAL,204,""            --title """"⚠️ CONFLICT: ${FROM} → ${TO} (PR #${PR}) — Manual review required"""" \"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,224,".github/workflows/sync.yml,REMOVAL,205,""            --body """"Conflict detected. Manual resolution required. Reviewers: ${MENTIONS}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,225,".github/workflows/sync.yml,ADDITION,269,""          *Created automatically by Git Sync Automation.*"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,226,".github/workflows/sync.yml,REMOVAL,207,""          echo """"⚠️ Conflict PR created for ${FROM} → ${TO}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,227,".github/workflows/sync.yml,ADDITION,271,""            echo """"⚠️ Conflict PR raised: ${FROM} → ${TO}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,228,".github/workflows/sync.yml,ADDITION,272,          fi,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,229,".github/workflows/sync.yml,REMOVAL,209,      # ── Step 7: Commit diff_summary.csv to configured csv_branch ─────────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,230,".github/workflows/sync.yml,ADDITION,274,      # ── Step 8: Commit diff_summary.csv to csv_branch ────────────────────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,231,".github/workflows/sync.yml,ADDITION,275,      # always() ensures this runs even if conflict PR step fails,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,232,".github/workflows/sync.yml,REMOVAL,211,        if: steps.results.outputs.has_changes == 'true',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,233,".github/workflows/sync.yml,ADDITION,277,        if: always() && steps.results.outputs.has_changes == 'true',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,234,".github/workflows/sync.yml,REMOVAL,235,      # ── Step 8: Send notifications ────────────────────────────────────────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,235,".github/workflows/sync.yml,ADDITION,301,      # ── Step 9: Send notifications via GitHub Issue ───────────────────────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,236,".github/workflows/sync.yml,ADDITION,302,      # always() ensures this runs even if earlier steps fail,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,237,".github/workflows/sync.yml,REMOVAL,237,        if: steps.results.outputs.has_changes == 'true',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,238,".github/workflows/sync.yml,ADDITION,304,        if: always() && steps.results.outputs.has_changes == 'true',false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,239,".github/workflows/sync.yml,REMOVAL,246,""          REPO=""""${{ github.repository }}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,240,".github/workflows/sync.yml,REMOVAL,253,""            if [ -n """"$USER"""" ]; then"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,241,".github/workflows/sync.yml,REMOVAL,254,""              MENTIONS=""""${MENTIONS} @${USER}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,242,".github/workflows/sync.yml,REMOVAL,255,            fi,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,243,".github/workflows/sync.yml,ADDITION,319,""            [ -n """"$USER"""" ] && MENTIONS=""""${MENTIONS} @${USER}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,244,".github/workflows/sync.yml,REMOVAL,258,          # Build notification message based on outcome,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,245,".github/workflows/sync.yml,ADDITION,322,""          # Set title, label and message based on outcome"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,246,".github/workflows/sync.yml,REMOVAL,260,""            MESSAGE=""""✅ **Git Sync Completed**"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,247,".github/workflows/sync.yml,ADDITION,324,""            ISSUE_TITLE=""""✅ Sync: ${FROM} → ${TO} (PR #${PR})"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,248,".github/workflows/sync.yml,ADDITION,325,""            ISSUE_LABEL=""""sync-success"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,249,".github/workflows/sync.yml,ADDITION,326,""            ISSUE_BODY=""""✅ **Git Sync Completed Successfully**"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,250,".github/workflows/sync.yml,ADDITION,327,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,251,".github/workflows/sync.yml,REMOVAL,262,          PR #${PR} — diff summary saved to \`.github/sync-diffs/\`,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,252,".github/workflows/sync.yml,REMOVAL,263,""          Notifying:${MENTIONS}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,253,".github/workflows/sync.yml,ADDITION,329,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,254,".github/workflows/sync.yml,ADDITION,330,          - **PR:** #${PR},false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,255,".github/workflows/sync.yml,ADDITION,331,          - **Diff summary:** saved to \`.github/sync-diffs/\`,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,256,".github/workflows/sync.yml,ADDITION,332,          - **Notifying:** ${MENTIONS},false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,257,".github/workflows/sync.yml,ADDITION,333,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,258,".github/workflows/sync.yml,ADDITION,334,""          *No action required.*"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,259,".github/workflows/sync.yml,REMOVAL,265,""            MESSAGE=""""⚠️ **Git Sync Conflict Detected**"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,260,".github/workflows/sync.yml,ADDITION,336,""            ISSUE_TITLE=""""⚠️ Conflict: ${FROM} → ${TO} (PR #${PR})"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,261,".github/workflows/sync.yml,ADDITION,337,""            ISSUE_LABEL=""""sync-conflict"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,262,".github/workflows/sync.yml,ADDITION,338,""            ISSUE_BODY=""""⚠️ **Git Sync Conflict Detected**"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,263,".github/workflows/sync.yml,ADDITION,339,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,264,".github/workflows/sync.yml,REMOVAL,267,          A conflict PR has been raised — manual resolution required.,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,265,".github/workflows/sync.yml,REMOVAL,268,""          Notifying:${MENTIONS}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,266,".github/workflows/sync.yml,ADDITION,341,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,267,".github/workflows/sync.yml,ADDITION,342,          - **PR:** #${PR},false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,268,".github/workflows/sync.yml,ADDITION,343,          - **Action required:** Resolve conflicts manually and merge the conflict PR,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,269,".github/workflows/sync.yml,ADDITION,344,          - **Diff summary:** saved to \`.github/sync-diffs/\`,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,270,".github/workflows/sync.yml,ADDITION,345,          - **Notifying:** ${MENTIONS},false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,271,".github/workflows/sync.yml,ADDITION,346,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,272,".github/workflows/sync.yml,ADDITION,347,""          *A conflict PR has been raised — please review and resolve.*"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,273,".github/workflows/sync.yml,REMOVAL,271,          # Post notification as a GitHub issue comment or new issue,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,274,".github/workflows/sync.yml,ADDITION,350,          # Get first notify user for assignee,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,275,".github/workflows/sync.yml,ADDITION,351,""          FIRST_USER=$(echo $NOTIFY | tr ',' '\n' | head -1 | tr -d '[:space:]')"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,276,".github/workflows/sync.yml,ADDITION,352,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,277,".github/workflows/sync.yml,REMOVAL,273,""            --title """"$([ """"${CONFLICT}"""" == """"false"""" ] && echo """"✅ Sync: ${FROM} → ${TO} (PR #${PR})"""" || echo """"⚠️ Conflict: ${FROM} → ${TO} (PR #${PR})"""")"""" \"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,278,".github/workflows/sync.yml,REMOVAL,274,""            --body """"${MESSAGE}"""" \"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,279,".github/workflows/sync.yml,REMOVAL,275,""            --label """"$([ """"${CONFLICT}"""" == """"false"""" ] && echo """"sync-success"""" || echo """"sync-conflict"""")"""" \"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,280,".github/workflows/sync.yml,REMOVAL,276,""            --assignee """"$(echo $NOTIFY | tr ',' '\n' | head -1 | tr -d '[:space:]')"""" \"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,281,".github/workflows/sync.yml,REMOVAL,277,""            2>/dev/null || echo """"Note: Could not create issue — label may not exist yet. Create 'sync-success' and 'sync-conflict' labels in your repo."""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,282,".github/workflows/sync.yml,ADDITION,354,""            --title """"${ISSUE_TITLE}"""" \"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,283,".github/workflows/sync.yml,ADDITION,355,""            --body """"${ISSUE_BODY}"""" \"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,284,".github/workflows/sync.yml,ADDITION,356,""            --label """"${ISSUE_LABEL}"""" \"",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,285,".github/workflows/sync.yml,ADDITION,357,""            --assignee """"${FIRST_USER}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,286,".github/workflows/sync.yml,REMOVAL,279,""          echo """"✅ Notifications sent to: ${NOTIFY}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,287,".github/workflows/sync.yml,ADDITION,359,""          echo """"✅ Notification issue created with label: ${ISSUE_LABEL}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,288,".github/workflows/sync.yml,REMOVAL,281,      # ── Step 9: Final summary ─────────────────────────────────────────────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,289,".github/workflows/sync.yml,ADDITION,361,      # ── Step 10: Final summary ────────────────────────────────────────────────,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,290,".github/workflows/sync.yml,REMOVAL,302,,false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,291,".github/workflows/sync.yml,ADDITION,387,""            echo """"          sync-success issue created"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,292,".github/workflows/sync.yml,REMOVAL,309,""            echo """"  Result: ⚠️  Conflict detected — PR raised, team notified"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,293,".github/workflows/sync.yml,ADDITION,389,""            echo """"  Result: ⚠️  Conflict detected"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,294,".github/workflows/sync.yml,ADDITION,390,""            echo """"          Conflict PR raised: ${FROM} → ${TO}"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,295,".github/workflows/sync.yml,ADDITION,392,""            echo """"          sync-conflict issue created"""""",false",true
+.github/sync-diffs/PR-11-master-to-mod-release-diff_summary.csv,REMOVAL,296,"OrderDao.java,ADDITION,27,""        System.out.println(""""sql created."""")"",false",true
+Main.java,REMOVAL,9, * MOD TEAM — mod-release branch,true
+Main.java,REMOVAL,10, * Changed for Oracle→Postgres migration audit:,true
+Main.java,REMOVAL,11, *   - Fetching INACTIVE customers for migration validation,true
+Main.java,REMOVAL,12, *   - Added credit_limit and account_type columns,true
+Main.java,ADDITION,9, * PINE LABS update (via main → master):,true
+Main.java,ADDITION,10, *   - ACTIVE customers with phone_number and pagination,true
+Main.java,ADDITION,11, *   - Conflicts with mod-release which has INACTIVE + credit_limit,true
+Main.java,REMOVAL,26,        // MOD TEAM: INACTIVE customers for migration audit,true
+Main.java,REMOVAL,27,        // CONFLICTS with master which fetches ACTIVE + phone_number + pagination,true
+Main.java,ADDITION,25,        // PINE LABS: ACTIVE customers with phone_number + pagination,true
+Main.java,ADDITION,26,        // CONFLICTS with mod-release: INACTIVE + credit_limit + no pagination,true
+Main.java,ADDITION,27,        int page     = 0;,true
+Main.java,ADDITION,28,        int pageSize = 10;,true
+Main.java,ADDITION,29,,true
+Main.java,REMOVAL,30,"                       account_type, credit_limit",true
+Main.java,ADDITION,32,"                       status, last_login, phone_number",true
+Main.java,REMOVAL,32,                WHERE status = 'INACTIVE',true
+Main.java,REMOVAL,33,                ORDER BY credit_limit DESC,true
+Main.java,REMOVAL,34,                LIMIT 10;,true
+Main.java,ADDITION,34,                WHERE status = 'ACTIVE',true
+Main.java,ADDITION,35,                ORDER BY last_login DESC,true
+Main.java,ADDITION,36,                LIMIT ? OFFSET ?;,true
+Main.java,ADDITION,40,"        stmt.setInt(1, pageSize);",true
+Main.java,ADDITION,41,"        stmt.setInt(2, page * pageSize);",true
+Main.java,REMOVAL,40,"        System.out.println(""Customer ID | Email                | Account Type | Credit Limit"");",true
+Main.java,REMOVAL,41,"        System.out.println(""────────────────────────────────────────────────────────────────"");",true
+Main.java,ADDITION,44,"        System.out.println(""Customer ID | Email                | Status | Last Login  | Phone"");",true
+Main.java,ADDITION,45,"        System.out.println(""──────────────────────────────────────────────────────────────────"");",true
+Main.java,REMOVAL,44,"            System.out.printf(""%-12s | %-20s | %-12s | %s%n"",",true
+Main.java,ADDITION,48,"            System.out.printf(""%-12s | %-20s | %-6s | %-11s | %s%n"",",true
+Main.java,REMOVAL,47,"                rs.getString(""account_type""),",true
+Main.java,REMOVAL,48,"                rs.getString(""credit_limit"")",true
+Main.java,ADDITION,51,"                rs.getString(""status""),",true
+Main.java,ADDITION,52,"                rs.getString(""last_login""),",true
+Main.java,ADDITION,53,"                rs.getString(""phone_number"")",true
+queries.sql,ADDITION,3,-- PINE LABS update (via main → master),true
+queries.sql,ADDITION,6,"-- PINE LABS: added merchant_id, payment_mode, ORDER BY amount DESC",true
+queries.sql,ADDITION,7,"-- CONFLICTS with mod-release: credit_score, credit_limit, ORDER BY credit_score",true
+queries.sql,REMOVAL,8,"    c.credit_score,",true
+queries.sql,REMOVAL,9,"    c.credit_limit,",true
+queries.sql,ADDITION,11,"    t.transaction_type,",true
+queries.sql,ADDITION,12,"    t.merchant_id,",true
+queries.sql,ADDITION,13,"    t.payment_mode,",true
+queries.sql,REMOVAL,15,ORDER BY c.credit_score DESC,true
+queries.sql,ADDITION,19,ORDER BY t.amount DESC,true
+queries.sql,ADDITION,23,"-- PINE LABS: added account_number, bank_code, currency",true
+queries.sql,ADDITION,24,"-- CONFLICTS with mod-release: credit_limit, ORDER BY credit_limit",true
+queries.sql,ADDITION,27,"    account_number,",true
+queries.sql,ADDITION,28,"    bank_code,",true
+queries.sql,REMOVAL,22,"    credit_limit,",true
+queries.sql,ADDITION,30,"    currency,",true
+queries.sql,REMOVAL,26,ORDER BY credit_limit DESC;,true
+queries.sql,ADDITION,34,ORDER BY balance DESC;,true
