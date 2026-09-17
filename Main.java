@@ -6,15 +6,12 @@ import java.sql.ResultSet;
 /**
  * Main.java
  * Pine Labs Credit Modernization
- * PINE LABS direct commit on master:
- * - Added phone_number, pagination
- * - WHERE status = 'ACTIVE'
- * - ORDER BY last_login DESC
- * This directly conflicts with mod-release changes on same lines
+ * PINE LABS update (via main → master):
+ *   - ACTIVE customers with phone_number and pagination
+ *   - Conflicts with mod-release which has INACTIVE + credit_limit
  */
 public class Main {
 
-    // PostgreSQL datasource config
     private static final String DB_URL      = "jdbc:postgresql://prod-db.pinelabs.com:5432/pinelabs";
     private static final String DB_DRIVER   = "org.postgresql.Driver";
     private static final String DB_USER     = "pinelabs_prod_user";
@@ -25,8 +22,8 @@ public class Main {
         Class.forName(DB_DRIVER);
         Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
-        // PINE LABS — phone_number + pagination
-        // CONFLICTS with mod-release: account_type + credit_limit + INACTIVE
+        // PINE LABS: ACTIVE customers with phone_number + pagination
+        // CONFLICTS with mod-release: INACTIVE + credit_limit + no pagination
         int page     = 0;
         int pageSize = 10;
 
