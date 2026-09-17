@@ -40,12 +40,12 @@ These files must exist in your repository for the automation to work:
 
 ```
 your-repo/
-├── .github/
-│   └── workflows/
-│       └── sync.yml              ← GitHub Actions workflow (must be on default branch)
-└── scripts/
-    ├── sync_branches.sh           ← fetches branches, simulates merge, generates diff
-    └── parse_diff.py             ← parses raw git diff into structured CSV
+└── .github/
+    ├── workflows/
+    │   └── sync.yml              ← GitHub Actions workflow (must be on default branch)
+    └── scripts/
+        ├── sync_branches.sh      ← fetches branches, simulates merge, generates diff
+        └── parse_diff.py         ← parses raw git diff into structured CSV
 ```
 
 ---
@@ -69,16 +69,16 @@ Copy these three files from this project into your repository maintaining the sa
 
 ```
 .github/workflows/sync.yml
-scripts/sync_branches.sh
-scripts/parse_diff.py
+.github/scripts/sync_branches.sh
+.github/scripts/parse_diff.py
 ```
 
 Commit and push them to your **default branch** (master):
 
 ```bash
 git add .github/workflows/sync.yml
-git add scripts/sync_branches.sh
-git add scripts/parse_diff.py
+git add .github/scripts/sync_branches.sh
+git add .github/scripts/parse_diff.py
 git commit -m "feat: add git sync automation"
 git push origin master
 ```
