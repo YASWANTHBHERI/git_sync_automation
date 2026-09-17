@@ -6,7 +6,11 @@ import java.sql.ResultSet;
 /**
  * Main.java
  * Pine Labs Credit Modernization
- * Updated by Pine Labs team on master — added status filter and new sort order
+ * PINE LABS direct commit on master:
+ * - Added phone_number, pagination
+ * - WHERE status = 'ACTIVE'
+ * - ORDER BY last_login DESC
+ * This directly conflicts with mod-release changes on same lines
  */
 public class Main {
 
@@ -21,29 +25,35 @@ public class Main {
         Class.forName(DB_DRIVER);
         Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
-        // Pine Labs team — added status=ACTIVE filter and last_login sort
-        // CONFLICTS with mod-release which uses HikariCP and credit_limit sort
+        // PINE LABS — phone_number + pagination
+        // CONFLICTS with mod-release: account_type + credit_limit + INACTIVE
+        int page     = 0;
+        int pageSize = 10;
+
         String query = """
                 SELECT customer_id, COALESCE(email, 'no-email') AS email,
-                       status, last_login
+                       status, last_login, phone_number
                 FROM customers
                 WHERE status = 'ACTIVE'
                 ORDER BY last_login DESC
-                LIMIT 10;
+                LIMIT ? OFFSET ?;
                 """;
 
         PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setInt(1, pageSize);
+        stmt.setInt(2, page * pageSize);
         ResultSet rs = stmt.executeQuery();
 
-        System.out.println("Customer ID | Email                | Status | Last Login");
-        System.out.println("────────────────────────────────────────────────────────");
+        System.out.println("Customer ID | Email                | Status | Last Login  | Phone");
+        System.out.println("──────────────────────────────────────────────────────────────────");
 
         while (rs.next()) {
-            System.out.printf("%-12s | %-20s | %-6s | %s%n",
+            System.out.printf("%-12s | %-20s | %-6s | %-11s | %s%n",
                 rs.getString("customer_id"),
                 rs.getString("email"),
                 rs.getString("status"),
-                rs.getString("last_login")
+                rs.getString("last_login"),
+                rs.getString("phone_number")
             );
         }
 
