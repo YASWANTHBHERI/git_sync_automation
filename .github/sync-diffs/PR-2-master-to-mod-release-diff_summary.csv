@@ -1,0 +1,26 @@
+file,change_type,line_number,content,conflict
+test_sync_change_2.md,ADDITION,1,# Test Sync Change 2,false
+test_sync_change_2.md,ADDITION,2,,false
+test_sync_change_2.md,ADDITION,3,Second test file added on `main` branch to re-test the Git Sync Automation pipeline.,false
+test_sync_change_2.md,ADDITION,4,,false
+test_sync_change_2.md,ADDITION,5,## Changes in this test,false
+test_sync_change_2.md,ADDITION,6,- Verifying workflow triggers correctly after previous fixes,false
+test_sync_change_2.md,ADDITION,7,- mod-release branch pushed to remote,false
+test_sync_change_2.md,ADDITION,8,- scripts committed to master branch,false
+test_sync_change_2.md,ADDITION,9,- GitHub Actions write permissions confirmed,false
+test_sync_change_2.md,ADDITION,10,,false
+test_sync_change_2.md,ADDITION,11,## Sample SQL change (simulating Oracle→Postgres migration context),false
+test_sync_change_2.md,ADDITION,12,,false
+test_sync_change_2.md,ADDITION,13,### Before (Oracle),false
+test_sync_change_2.md,ADDITION,14,```sql,false
+test_sync_change_2.md,ADDITION,15,SELECT * FROM users WHERE ROWNUM <= 10;,false
+test_sync_change_2.md,ADDITION,16,"SELECT NVL(email, 'no-email') FROM customers;",false
+test_sync_change_2.md,ADDITION,17,SELECT SYSDATE FROM DUAL;,false
+test_sync_change_2.md,ADDITION,18,```,false
+test_sync_change_2.md,ADDITION,19,,false
+test_sync_change_2.md,ADDITION,20,### After (Postgres),false
+test_sync_change_2.md,ADDITION,21,```sql,false
+test_sync_change_2.md,ADDITION,22,SELECT * FROM users LIMIT 10;,false
+test_sync_change_2.md,ADDITION,23,"SELECT COALESCE(email, 'no-email') FROM customers;",false
+test_sync_change_2.md,ADDITION,24,SELECT NOW();,false
+test_sync_change_2.md,ADDITION,25,```,false
