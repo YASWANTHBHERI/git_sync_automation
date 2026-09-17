@@ -1,6 +1,6 @@
 -- queries.sql
 -- Pine Labs Credit Modernization
--- PINE LABS direct commit on master
+-- PINE LABS update (via main → master)
 
 -- Get customer transactions
 -- PINE LABS: added merchant_id, payment_mode, ORDER BY amount DESC
