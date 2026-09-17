@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- UserMapper.xml -->
+<!-- Pine Labs Credit Modernization — IBATIS mapper -->
+<!-- New file added by Pine Labs team on master -->
+
+<sqlMap namespace="User">
+
+    <typeAlias alias="User" type="com.pinelabs.model.User"/>
+
+    <resultMap id="UserResult" class="User">
+        <result property="userId"    column="user_id"    jdbcType="INTEGER"/>
+        <result property="username"  column="username"   jdbcType="VARCHAR"/>
+        <result property="email"     column="email"      jdbcType="VARCHAR"/>
+        <result property="role"      column="role"       jdbcType="VARCHAR"/>
+        <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- Get user by ID -->
+    <select id="getUserById" parameterClass="int" resultMap="UserResult">
+        SELECT user_id, username, email, role, created_at
+        FROM users
+        WHERE user_id = #userId#
+        LIMIT 1
+    </select>
+
+    <!-- Get all users by role -->
+    <select id="getUsersByRole" parameterClass="map" resultMap="UserResult">
+        SELECT user_id, username, email, role, created_at
+        FROM users
+        WHERE role = #role#
+        ORDER BY created_at DESC
+        LIMIT #pageSize# OFFSET #offset#
+    </select>
+
+    <!-- Insert new user -->
+    <insert id="insertUser" parameterClass="User">
+        INSERT INTO users (username, email, role, created_at)
+        VALUES (#username#, #email#, #role#, NOW())
+    </insert>
+
+</sqlMap>
