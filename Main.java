@@ -6,10 +6,9 @@ import java.sql.ResultSet;
 /**
  * Main.java
  * Pine Labs Credit Modernization
- * MOD TEAM — mod-release branch
- * Changed for Oracle→Postgres migration audit:
- *   - Fetching INACTIVE customers for migration validation
- *   - Added credit_limit and account_type columns
+ * PINE LABS update (via main → master):
+ *   - ACTIVE customers with phone_number and pagination
+ *   - Conflicts with mod-release which has INACTIVE + credit_limit
  */
 public class Main {
 
@@ -23,8 +22,11 @@ public class Main {
         Class.forName(DB_DRIVER);
         Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
-        // MOD TEAM: INACTIVE customers for migration audit
-        // CONFLICTS with master which fetches ACTIVE + phone_number + pagination
+        // PINE LABS: ACTIVE customers with phone_number + pagination
+        // CONFLICTS with mod-release: INACTIVE + credit_limit + no pagination
+        int page     = 0;
+        int pageSize = 10;
+
         String query = """
                 SELECT customer_id, COALESCE(email, 'no-email') AS email,
                        account_type, credit_limit

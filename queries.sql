@@ -1,6 +1,6 @@
 -- queries.sql
 -- Pine Labs Credit Modernization
--- MOD TEAM changes on mod-release
+-- PINE LABS update (via main → master)
 
 -- Get customer transactions
 -- MOD TEAM: added credit_score, credit_limit for migration validation
