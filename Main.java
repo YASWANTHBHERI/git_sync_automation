@@ -6,7 +6,10 @@ import java.sql.ResultSet;
 /**
  * Main.java
  * Pine Labs Credit Modernization
- * Updated by Pine Labs team on master — added status filter and new sort order
+ * MOD TEAM changes on mod-release branch:
+ * - Fetching INACTIVE customers for migration audit
+ * - Added account_type and credit_limit columns
+ * - No pagination — full result set for audit
  */
 public class Main {
 
@@ -21,29 +24,29 @@ public class Main {
         Class.forName(DB_DRIVER);
         Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
-        // Pine Labs team — added status=ACTIVE filter and last_login sort
-        // CONFLICTS with mod-release which uses HikariCP and credit_limit sort
+        // MOD TEAM — fetch INACTIVE customers for Oracle→Postgres migration audit
+        // account_type and credit_limit needed for migration validation
         String query = """
                 SELECT customer_id, COALESCE(email, 'no-email') AS email,
-                       status, last_login
+                       account_type, credit_limit
                 FROM customers
-                WHERE status = 'ACTIVE'
-                ORDER BY last_login DESC
+                WHERE status = 'INACTIVE'
+                ORDER BY credit_limit DESC
                 LIMIT 10;
                 """;
 
         PreparedStatement stmt = conn.prepareStatement(query);
         ResultSet rs = stmt.executeQuery();
 
-        System.out.println("Customer ID | Email                | Status | Last Login");
-        System.out.println("────────────────────────────────────────────────────────");
+        System.out.println("Customer ID | Email                | Account Type | Credit Limit");
+        System.out.println("────────────────────────────────────────────────────────────────");
 
         while (rs.next()) {
-            System.out.printf("%-12s | %-20s | %-6s | %s%n",
+            System.out.printf("%-12s | %-20s | %-12s | %s%n",
                 rs.getString("customer_id"),
                 rs.getString("email"),
-                rs.getString("status"),
-                rs.getString("last_login")
+                rs.getString("account_type"),
+                rs.getString("credit_limit")
             );
         }
 
