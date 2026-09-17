@@ -24,8 +24,10 @@ public class OrderDao {
                 ORDER BY created_at DESC
                 LIMIT 50;
                 """;
+        System.out.println("sql created.")
 
         PreparedStatement stmt = conn.prepareStatement(sql);
+        S=
         stmt.setInt(1, customerId);
         ResultSet rs = stmt.executeQuery();
 
