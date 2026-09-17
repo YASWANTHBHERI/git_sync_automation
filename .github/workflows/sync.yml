@@ -1,13 +1,19 @@
 name: Git Sync Automation
 
 # ─────────────────────────────────────────────────────────────────────────────
-# CONFIGURATION — set your defaults here
-# All values can be overridden at runtime via workflow_dispatch inputs
-# ─────────────────────────────────────────────────────────────────────────────
-# from_branch   : branch changes come FROM (e.g. master)
-# to_branch     : branch changes go INTO  (e.g. release)
-# csv_branch    : branch where diff_summary.csv is committed (e.g. release)
-# notify_users  : comma-separated GitHub usernames to notify (e.g. user1,user2)
+# CONFIGURATION — do NOT hardcode branch names here
+# Set them as GitHub Repository Variables instead:
+#
+#   GitHub repo → Settings → Secrets and variables → Actions → Variables tab
+#
+#   Variable Name    Description                        Example
+#   ─────────────    ─────────────────────────────────  ───────────────
+#   FROM_BRANCH      Branch changes come FROM           master
+#   TO_BRANCH        Branch changes go INTO             mod-release
+#   CSV_BRANCH       Branch where CSV is committed      mod-release
+#   NOTIFY_USERS     Comma-separated GitHub usernames   user1,user2
+#
+# To change branches: update the variables on GitHub — no code change needed.
 # ─────────────────────────────────────────────────────────────────────────────
 
 on:
@@ -20,56 +26,83 @@ on:
   workflow_dispatch:
     inputs:
       from_branch:
-        description: 'Source branch (changes come FROM here)'
-        required: true
-        default: 'master'
-      to_branch:
-        description: 'Target branch (changes go INTO here)'
-        required: true
-        default: 'mod-release'
-      csv_branch:
-        description: 'Branch where diff_summary.csv will be committed'
-        required: true
-        default: 'mod-release'
-      notify_users:
-        description: 'GitHub usernames to notify — comma separated (e.g. user1,user2)'
+        description: 'Source branch (changes come FROM here) — leave blank to use repo variable'
         required: false
-        default: 'YASWANTHBHERI'
+        default: ''
+      to_branch:
+        description: 'Target branch (changes go INTO here) — leave blank to use repo variable'
+        required: false
+        default: ''
+      csv_branch:
+        description: 'Branch where diff_summary.csv will be committed — leave blank to use repo variable'
+        required: false
+        default: ''
+      notify_users:
+        description: 'GitHub usernames to notify — leave blank to use repo variable'
+        required: false
+        default: ''
 
 jobs:
   sync:
-    # For automatic trigger: only run when PR is actually merged, not just closed
+    # Only run when PR is actually merged, not just closed
     if: |
       github.event_name == 'workflow_dispatch' ||
       github.event.pull_request.merged == true
 
     runs-on: ubuntu-latest
 
-    # ── Environment variables — edit these defaults for your project ──────────
-    env:
-      DEFAULT_FROM_BRANCH: 'master'
-      DEFAULT_TO_BRANCH: 'mod-release'
-      DEFAULT_CSV_BRANCH: 'mod-release'
-      DEFAULT_NOTIFY_USERS: 'YASWANTHBHERI'   # ← replace with your team's GitHub usernames
-
     steps:
       # ── Step 1: Resolve all configurable inputs ──────────────────────────────
+      # Priority order:
+      #   1. workflow_dispatch input (if provided at runtime)
+      #   2. GitHub Repository Variable (vars.FROM_BRANCH etc.)
+      #   3. Hardcoded fallback (last resort only)
       - name: Resolve inputs
         id: config
         run: |
+          # ── Helper: resolve value with priority chain ──────────────────────
+          # Priority: dispatch input → repo variable → fallback default
+          resolve() {
+            local INPUT_VAL="$1"
+            local VAR_VAL="$2"
+            local FALLBACK="$3"
+            if [ -n "${INPUT_VAL}" ]; then
+              echo "${INPUT_VAL}"
+            elif [ -n "${VAR_VAL}" ]; then
+              echo "${VAR_VAL}"
+            else
+              echo "${FALLBACK}"
+            fi
+          }
+
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo "from_branch=${{ github.event.inputs.from_branch }}" >> $GITHUB_OUTPUT
-            echo "to_branch=${{ github.event.inputs.to_branch }}"     >> $GITHUB_OUTPUT
-            echo "csv_branch=${{ github.event.inputs.csv_branch }}"   >> $GITHUB_OUTPUT
-            echo "notify_users=${{ github.event.inputs.notify_users }}" >> $GITHUB_OUTPUT
-            echo "pr_number=manual-$(date +%s)"                       >> $GITHUB_OUTPUT
+            # Manual trigger — use dispatch inputs, fall back to repo variables
+            FROM=$(resolve "${{ github.event.inputs.from_branch }}" "${{ vars.FROM_BRANCH }}" "master")
+            TO=$(resolve "${{ github.event.inputs.to_branch }}"     "${{ vars.TO_BRANCH }}"   "mod-release")
+            CSV=$(resolve "${{ github.event.inputs.csv_branch }}"   "${{ vars.CSV_BRANCH }}"  "mod-release")
+            NOTIFY=$(resolve "${{ github.event.inputs.notify_users }}" "${{ vars.NOTIFY_USERS }}" "")
+            PR="manual-$(date +%s)"
           else
-            echo "from_branch=${{ github.event.pull_request.base.ref }}" >> $GITHUB_OUTPUT
-            echo "to_branch=${DEFAULT_TO_BRANCH}"                         >> $GITHUB_OUTPUT
-            echo "csv_branch=${DEFAULT_CSV_BRANCH}"                       >> $GITHUB_OUTPUT
-            echo "notify_users=${DEFAULT_NOTIFY_USERS}"                   >> $GITHUB_OUTPUT
-            echo "pr_number=${{ github.event.pull_request.number }}"      >> $GITHUB_OUTPUT
+            # Automatic trigger — use repo variables, fall back to hardcoded defaults
+            FROM=$(resolve "" "${{ vars.FROM_BRANCH }}" "master")
+            TO=$(resolve ""   "${{ vars.TO_BRANCH }}"   "mod-release")
+            CSV=$(resolve ""  "${{ vars.CSV_BRANCH }}"  "mod-release")
+            NOTIFY=$(resolve "" "${{ vars.NOTIFY_USERS }}" "")
+            PR="${{ github.event.pull_request.number }}"
           fi
+
+          echo "from_branch=${FROM}"   >> $GITHUB_OUTPUT
+          echo "to_branch=${TO}"       >> $GITHUB_OUTPUT
+          echo "csv_branch=${CSV}"     >> $GITHUB_OUTPUT
+          echo "notify_users=${NOTIFY}" >> $GITHUB_OUTPUT
+          echo "pr_number=${PR}"       >> $GITHUB_OUTPUT
+
+          echo "Resolved config:"
+          echo "  from_branch  = ${FROM}"
+          echo "  to_branch    = ${TO}"
+          echo "  csv_branch   = ${CSV}"
+          echo "  notify_users = ${NOTIFY}"
+          echo "  pr_number    = ${PR}"
 
       # ── Step 2: Checkout repo with full history ───────────────────────────────
       - name: Checkout repository
