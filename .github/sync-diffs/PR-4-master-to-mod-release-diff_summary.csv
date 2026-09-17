@@ -1,0 +1,92 @@
+file,change_type,line_number,content,conflict
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,1,"file,change_type,line_number,content,conflict",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,2,"test_sync_change_2.md,ADDITION,1,# Test Sync Change 2,false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,3,"test_sync_change_2.md,ADDITION,2,,false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,4,"test_sync_change_2.md,ADDITION,3,Second test file added on `main` branch to re-test the Git Sync Automation pipeline.,false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,5,"test_sync_change_2.md,ADDITION,4,,false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,6,"test_sync_change_2.md,ADDITION,5,## Changes in this test,false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,7,"test_sync_change_2.md,ADDITION,6,- Verifying workflow triggers correctly after previous fixes,false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,8,"test_sync_change_2.md,ADDITION,7,- mod-release branch pushed to remote,false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,9,"test_sync_change_2.md,ADDITION,8,- scripts committed to master branch,false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,10,"test_sync_change_2.md,ADDITION,9,- GitHub Actions write permissions confirmed,false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,11,"test_sync_change_2.md,ADDITION,10,,false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,12,"test_sync_change_2.md,ADDITION,11,## Sample SQL change (simulating Oracle→Postgres migration context),false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,13,"test_sync_change_2.md,ADDITION,12,,false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,14,"test_sync_change_2.md,ADDITION,13,### Before (Oracle),false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,15,"test_sync_change_2.md,ADDITION,14,```sql,false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,16,"test_sync_change_2.md,ADDITION,15,SELECT * FROM users WHERE ROWNUM <= 10;,false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,17,"test_sync_change_2.md,ADDITION,16,""SELECT NVL(email, 'no-email') FROM customers;"",false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,18,"test_sync_change_2.md,ADDITION,17,SELECT SYSDATE FROM DUAL;,false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,19,"test_sync_change_2.md,ADDITION,18,```,false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,20,"test_sync_change_2.md,ADDITION,19,,false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,21,"test_sync_change_2.md,ADDITION,20,### After (Postgres),false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,22,"test_sync_change_2.md,ADDITION,21,```sql,false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,23,"test_sync_change_2.md,ADDITION,22,SELECT * FROM users LIMIT 10;,false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,24,"test_sync_change_2.md,ADDITION,23,""SELECT COALESCE(email, 'no-email') FROM customers;"",false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,25,"test_sync_change_2.md,ADDITION,24,SELECT NOW();,false",false
+.github/sync-diffs/PR-2-master-to-mod-release-diff_summary.csv,REMOVAL,26,"test_sync_change_2.md,ADDITION,25,```,false",false
+Main.java,REMOVAL,1,class Main{,false
+Main.java,REMOVAL,2,    public static void Main(String args[]){,false
+Main.java,REMOVAL,3,"        System.out.println(""Hell World"");",false
+Main.java,ADDITION,1,import java.sql.Connection;,false
+Main.java,ADDITION,2,import java.sql.DriverManager;,false
+Main.java,ADDITION,3,import java.sql.PreparedStatement;,false
+Main.java,ADDITION,4,import java.sql.ResultSet;,false
+Main.java,ADDITION,5,,false
+Main.java,ADDITION,6,/**,false
+Main.java,ADDITION,7, * Main.java,false
+Main.java,ADDITION,8, * Pine Labs Credit Modernization — Oracle to PostgreSQL migration,false
+Main.java,ADDITION,9, * Datasource configuration and sample query execution,false
+Main.java,ADDITION,10, */,false
+Main.java,ADDITION,11,public class Main {,false
+Main.java,ADDITION,12,,false
+Main.java,ADDITION,13,    // ── Oracle datasource config (before migration) ──────────────────────────,false
+Main.java,ADDITION,14,"    // private static final String DB_URL      = ""jdbc:oracle:thin:@localhost:1521:orcl"";",false
+Main.java,ADDITION,15,"    // private static final String DB_DRIVER   = ""oracle.jdbc.driver.OracleDriver"";",false
+Main.java,ADDITION,16,"    // private static final String DB_DIALECT  = ""org.hibernate.dialect.OracleDialect"";",false
+Main.java,ADDITION,17,,false
+Main.java,ADDITION,18,    // ── PostgreSQL datasource config (after migration) ────────────────────────,false
+Main.java,ADDITION,19,"    private static final String DB_URL      = ""jdbc:postgresql://localhost:5432/pinelabs"";",false
+Main.java,ADDITION,20,"    private static final String DB_DRIVER   = ""org.postgresql.Driver"";",false
+Main.java,ADDITION,21,"    private static final String DB_DIALECT  = ""org.hibernate.dialect.PostgreSQLDialect"";",false
+Main.java,ADDITION,22,,false
+Main.java,ADDITION,23,"    private static final String DB_USER     = ""pinelabs_user"";",false
+Main.java,ADDITION,24,"    private static final String DB_PASSWORD = ""secret"";",false
+Main.java,ADDITION,25,,false
+Main.java,ADDITION,26,    public static void main(String[] args) throws Exception {,false
+Main.java,ADDITION,27,,false
+Main.java,ADDITION,28,        Class.forName(DB_DRIVER);,false
+Main.java,ADDITION,29,"        Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);",false
+Main.java,ADDITION,30,,false
+Main.java,ADDITION,31,        // ── Oracle query (before migration) ───────────────────────────────────,false
+Main.java,ADDITION,32,"        // SELECT customer_id, NVL(email, 'no-email') AS email",false
+Main.java,ADDITION,33,        // FROM customers,false
+Main.java,ADDITION,34,        // WHERE ROWNUM <= 10,false
+Main.java,ADDITION,35,        // ORDER BY created_date DESC;,false
+Main.java,ADDITION,36,,false
+Main.java,ADDITION,37,        // ── PostgreSQL equivalent (after migration) ───────────────────────────,false
+Main.java,ADDITION,38,"        String query = """"""",false
+Main.java,ADDITION,39,"                SELECT customer_id, COALESCE(email, 'no-email') AS email",false
+Main.java,ADDITION,40,                FROM customers,false
+Main.java,ADDITION,41,                ORDER BY created_date DESC,false
+Main.java,ADDITION,42,                LIMIT 10;,false
+Main.java,ADDITION,43,"                """""";",false
+Main.java,ADDITION,44,,false
+Main.java,ADDITION,45,        PreparedStatement stmt = conn.prepareStatement(query);,false
+Main.java,ADDITION,46,        ResultSet rs = stmt.executeQuery();,false
+Main.java,ADDITION,47,,false
+Main.java,ADDITION,48,"        System.out.println(""Customer ID | Email"");",false
+Main.java,ADDITION,49,"        System.out.println(""────────────────────────────────"");",false
+Main.java,ADDITION,50,,false
+Main.java,ADDITION,51,        while (rs.next()) {,false
+Main.java,ADDITION,52,"            System.out.printf(""%-12s | %s%n"",",false
+Main.java,ADDITION,53,"                rs.getString(""customer_id""),",false
+Main.java,ADDITION,54,"                rs.getString(""email"")",false
+Main.java,ADDITION,55,            );,false
+Main.java,ADDITION,56,        },false
+Main.java,ADDITION,57,,false
+Main.java,ADDITION,58,        rs.close();,false
+Main.java,ADDITION,59,        stmt.close();,false
+Main.java,ADDITION,60,        conn.close();,false
+Main.java,REMOVAL,5,},false
+Main.java,ADDITION,62,},false
