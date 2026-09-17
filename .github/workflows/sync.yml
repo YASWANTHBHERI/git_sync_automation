@@ -1,0 +1,312 @@
+name: Git Sync Automation
+
+# ─────────────────────────────────────────────────────────────────────────────
+# CONFIGURATION — set your defaults here
+# All values can be overridden at runtime via workflow_dispatch inputs
+# ─────────────────────────────────────────────────────────────────────────────
+# from_branch   : branch changes come FROM (e.g. master)
+# to_branch     : branch changes go INTO  (e.g. release)
+# csv_branch    : branch where diff_summary.csv is committed (e.g. release)
+# notify_users  : comma-separated GitHub usernames to notify (e.g. user1,user2)
+# ─────────────────────────────────────────────────────────────────────────────
+
+on:
+  # ── Automatic: fires when a PR is merged ──────────────────────────────────
+  pull_request:
+    types:
+      - closed
+
+  # ── Manual: trigger for any branch combination ────────────────────────────
+  workflow_dispatch:
+    inputs:
+      from_branch:
+        description: 'Source branch (changes come FROM here)'
+        required: true
+        default: 'master'
+      to_branch:
+        description: 'Target branch (changes go INTO here)'
+        required: true
+        default: 'mod-release'
+      csv_branch:
+        description: 'Branch where diff_summary.csv will be committed'
+        required: true
+        default: 'mod-release'
+      notify_users:
+        description: 'GitHub usernames to notify — comma separated (e.g. user1,user2)'
+        required: false
+        default: 'YASWANTHBHERI'
+
+jobs:
+  sync:
+    # For automatic trigger: only run when PR is actually merged, not just closed
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      github.event.pull_request.merged == true
+
+    runs-on: ubuntu-latest
+
+    # ── Environment variables — edit these defaults for your project ──────────
+    env:
+      DEFAULT_FROM_BRANCH: 'master'
+      DEFAULT_TO_BRANCH: 'mod-release'
+      DEFAULT_CSV_BRANCH: 'mod-release'
+      DEFAULT_NOTIFY_USERS: 'YASWANTHBHERI'   # ← replace with your team's GitHub usernames
+
+    steps:
+      # ── Step 1: Resolve all configurable inputs ──────────────────────────────
+      - name: Resolve inputs
+        id: config
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "from_branch=${{ github.event.inputs.from_branch }}" >> $GITHUB_OUTPUT
+            echo "to_branch=${{ github.event.inputs.to_branch }}"     >> $GITHUB_OUTPUT
+            echo "csv_branch=${{ github.event.inputs.csv_branch }}"   >> $GITHUB_OUTPUT
+            echo "notify_users=${{ github.event.inputs.notify_users }}" >> $GITHUB_OUTPUT
+            echo "pr_number=manual-$(date +%s)"                       >> $GITHUB_OUTPUT
+          else
+            echo "from_branch=${{ github.event.pull_request.base.ref }}" >> $GITHUB_OUTPUT
+            echo "to_branch=${DEFAULT_TO_BRANCH}"                         >> $GITHUB_OUTPUT
+            echo "csv_branch=${DEFAULT_CSV_BRANCH}"                       >> $GITHUB_OUTPUT
+            echo "notify_users=${DEFAULT_NOTIFY_USERS}"                   >> $GITHUB_OUTPUT
+            echo "pr_number=${{ github.event.pull_request.number }}"      >> $GITHUB_OUTPUT
+          fi
+
+      # ── Step 2: Checkout repo with full history ───────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── Step 3: Set up Python ─────────────────────────────────────────────────
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # ── Step 4: Run sync script — fetch, simulate, generate CSV ──────────────
+      - name: Run sync script
+        run: |
+          chmod +x scripts/sync_branches.sh
+          bash scripts/sync_branches.sh \
+            ${{ steps.config.outputs.from_branch }} \
+            ${{ steps.config.outputs.to_branch }}
+
+      # ── Step 5: Check for changes and read conflict flag ─────────────────────
+      - name: Check results
+        id: results
+        run: |
+          # Check if CSV has actual content beyond the header
+          if [ -s diff_summary.csv ] && [ $(wc -l < diff_summary.csv) -gt 1 ]; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+          # Read conflict flag
+          if [ -f conflict_flag.txt ]; then
+            CONFLICT=$(cat conflict_flag.txt | cut -d'=' -f2 | tr -d '[:space:]')
+            echo "is_conflict=${CONFLICT}" >> $GITHUB_OUTPUT
+          else
+            echo "is_conflict=false" >> $GITHUB_OUTPUT
+          fi
+
+      # ── Step 6a: CLEAN PATH — merge directly into to_branch ──────────────────
+      - name: Merge into target branch (clean)
+        if: |
+          steps.results.outputs.has_changes == 'true' &&
+          steps.results.outputs.is_conflict == 'false'
+        run: |
+          FROM="${{ steps.config.outputs.from_branch }}"
+          TO="${{ steps.config.outputs.to_branch }}"
+          PR="${{ steps.config.outputs.pr_number }}"
+
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name  "github-actions[bot]"
+
+          git checkout ${TO}
+          git merge origin/${FROM} --no-edit \
+            -m "sync: merge ${FROM} into ${TO} (PR #${PR}) [auto]"
+          git push origin ${TO}
+
+          echo "✅ Merged ${FROM} → ${TO} successfully"
+
+      # ── Step 6b: CONFLICT PATH — raise a PR ──────────────────────────────────
+      - name: Create conflict PR (conflict)
+        if: |
+          steps.results.outputs.has_changes == 'true' &&
+          steps.results.outputs.is_conflict == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          FROM="${{ steps.config.outputs.from_branch }}"
+          TO="${{ steps.config.outputs.to_branch }}"
+          PR="${{ steps.config.outputs.pr_number }}"
+          NOTIFY="${{ steps.config.outputs.notify_users }}"
+
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name  "github-actions[bot]"
+
+          # Create a sync branch from the target branch
+          SYNC_BRANCH="sync/${FROM}-to-${TO}-PR-${PR}"
+          git checkout ${TO}
+          git checkout -b ${SYNC_BRANCH}
+          git push origin ${SYNC_BRANCH}
+
+          # Build reviewer mentions for PR body
+          MENTIONS=""
+          IFS=',' read -ra USERS <<< "$NOTIFY"
+          for USER in "${USERS[@]}"; do
+            USER=$(echo "$USER" | tr -d '[:space:]')
+            if [ -n "$USER" ]; then
+              MENTIONS="${MENTIONS} @${USER}"
+            fi
+          done
+
+          # Create PR with conflict details
+          gh pr create \
+            --base "${TO}" \
+            --head "${SYNC_BRANCH}" \
+            --title "⚠️ CONFLICT: ${FROM} → ${TO} (PR #${PR}) — Manual review required" \
+            --body "## ⚠️ Conflict Detected: \`${FROM}\` → \`${TO}\`
+
+          **Source PR:** #${PR}
+          **Status:** MANUAL REVIEW REQUIRED — \`${TO}\` was NOT modified automatically
+
+          ---
+
+          ## What happened
+          GitHub Actions attempted to merge \`${FROM}\` into \`${TO}\` but detected conflicts.
+          The merge was aborted. No changes have been made to \`${TO}\`.
+
+          ## What you need to do
+          \`\`\`bash
+          git fetch origin ${FROM}
+          git checkout ${TO}
+          git merge origin/${FROM}
+          # resolve conflicts in the files shown below
+          git add .
+          git commit
+          git push origin ${TO}
+          \`\`\`
+
+          ## Changed files (see diff_summary.csv for full breakdown)
+          $(cat diff_summary.csv | awk -F',' 'NR>1 {print $1}' | sort -u | sed 's/^/- /')
+
+          ---
+          Reviewers: ${MENTIONS}
+
+          *This PR was created automatically by Git Sync Automation.*" \
+            --label "conflict,needs-review" 2>/dev/null || \
+          gh pr create \
+            --base "${TO}" \
+            --head "${SYNC_BRANCH}" \
+            --title "⚠️ CONFLICT: ${FROM} → ${TO} (PR #${PR}) — Manual review required" \
+            --body "Conflict detected. Manual resolution required. Reviewers: ${MENTIONS}"
+
+          echo "⚠️ Conflict PR created for ${FROM} → ${TO}"
+
+      # ── Step 7: Commit diff_summary.csv to configured csv_branch ─────────────
+      - name: Commit diff_summary.csv to csv_branch
+        if: steps.results.outputs.has_changes == 'true'
+        run: |
+          FROM="${{ steps.config.outputs.from_branch }}"
+          TO="${{ steps.config.outputs.to_branch }}"
+          PR="${{ steps.config.outputs.pr_number }}"
+          CSV_BRANCH="${{ steps.config.outputs.csv_branch }}"
+          CONFLICT="${{ steps.results.outputs.is_conflict }}"
+          FILENAME="PR-${PR}-${FROM}-to-${TO}-diff_summary.csv"
+
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name  "github-actions[bot]"
+
+          git fetch origin ${CSV_BRANCH}
+          git checkout ${CSV_BRANCH}
+
+          mkdir -p .github/sync-diffs
+          cp diff_summary.csv .github/sync-diffs/${FILENAME}
+
+          git add .github/sync-diffs/${FILENAME}
+          git commit -m "sync-diff: ${FROM} → ${TO} PR #${PR} (conflict=${CONFLICT})"
+          git push origin ${CSV_BRANCH}
+
+          echo "✅ diff_summary.csv committed to ${CSV_BRANCH}/.github/sync-diffs/${FILENAME}"
+
+      # ── Step 8: Send notifications ────────────────────────────────────────────
+      - name: Send notifications
+        if: steps.results.outputs.has_changes == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          FROM="${{ steps.config.outputs.from_branch }}"
+          TO="${{ steps.config.outputs.to_branch }}"
+          PR="${{ steps.config.outputs.pr_number }}"
+          NOTIFY="${{ steps.config.outputs.notify_users }}"
+          CONFLICT="${{ steps.results.outputs.is_conflict }}"
+          REPO="${{ github.repository }}"
+
+          # Build @mention string
+          MENTIONS=""
+          IFS=',' read -ra USERS <<< "$NOTIFY"
+          for USER in "${USERS[@]}"; do
+            USER=$(echo "$USER" | tr -d '[:space:]')
+            if [ -n "$USER" ]; then
+              MENTIONS="${MENTIONS} @${USER}"
+            fi
+          done
+
+          # Build notification message based on outcome
+          if [ "${CONFLICT}" == "false" ]; then
+            MESSAGE="✅ **Git Sync Completed**
+          \`${FROM}\` has been merged into \`${TO}\` automatically.
+          PR #${PR} — diff summary saved to \`.github/sync-diffs/\`
+          Notifying:${MENTIONS}"
+          else
+            MESSAGE="⚠️ **Git Sync Conflict Detected**
+          Could not auto-merge \`${FROM}\` into \`${TO}\`.
+          A conflict PR has been raised — manual resolution required.
+          Notifying:${MENTIONS}"
+          fi
+
+          # Post notification as a GitHub issue comment or new issue
+          gh issue create \
+            --title "$([ "${CONFLICT}" == "false" ] && echo "✅ Sync: ${FROM} → ${TO} (PR #${PR})" || echo "⚠️ Conflict: ${FROM} → ${TO} (PR #${PR})")" \
+            --body "${MESSAGE}" \
+            --label "$([ "${CONFLICT}" == "false" ] && echo "sync-success" || echo "sync-conflict")" \
+            --assignee "$(echo $NOTIFY | tr ',' '\n' | head -1 | tr -d '[:space:]')" \
+            2>/dev/null || echo "Note: Could not create issue — label may not exist yet. Create 'sync-success' and 'sync-conflict' labels in your repo."
+
+          echo "✅ Notifications sent to: ${NOTIFY}"
+
+      # ── Step 9: Final summary ─────────────────────────────────────────────────
+      - name: Print summary
+        if: always()
+        run: |
+          FROM="${{ steps.config.outputs.from_branch }}"
+          TO="${{ steps.config.outputs.to_branch }}"
+          PR="${{ steps.config.outputs.pr_number }}"
+          CSV_BRANCH="${{ steps.config.outputs.csv_branch }}"
+          NOTIFY="${{ steps.config.outputs.notify_users }}"
+
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo " Git Sync Automation — Run Summary"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "  From branch  : ${FROM}"
+          echo "  To branch    : ${TO}"
+          echo "  CSV branch   : ${CSV_BRANCH}"
+          echo "  PR number    : ${PR}"
+          echo "  Has changes  : ${{ steps.results.outputs.has_changes }}"
+          echo "  Conflict     : ${{ steps.results.outputs.is_conflict }}"
+          echo "  Notify       : ${NOTIFY}"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+          if [ "${{ steps.results.outputs.has_changes }}" == "false" ]; then
+            echo "  Result: Branches already in sync — nothing to do ✓"
+          elif [ "${{ steps.results.outputs.is_conflict }}" == "false" ]; then
+            echo "  Result: ✅ Merged ${FROM} → ${TO} successfully"
+            echo "          CSV saved to ${CSV_BRANCH}/.github/sync-diffs/"
+          else
+            echo "  Result: ⚠️  Conflict detected — PR raised, team notified"
+            echo "          CSV saved to ${CSV_BRANCH}/.github/sync-diffs/"
+          fi
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
