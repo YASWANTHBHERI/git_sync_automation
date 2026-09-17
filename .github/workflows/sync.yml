@@ -46,10 +46,17 @@ on:
 
 jobs:
   sync:
-    # Only run when PR is actually merged, not just closed
+    # Only run when:
+    # 1. Manually triggered via workflow_dispatch, OR
+    # 2. A PR is merged AND the target branch matches FROM_BRANCH repo variable
+    #    This prevents the workflow from triggering on PRs merged into other branches
+    #    e.g. merging into mod-release should NOT trigger this workflow
     if: |
       github.event_name == 'workflow_dispatch' ||
-      github.event.pull_request.merged == true
+      (
+        github.event.pull_request.merged == true &&
+        github.event.pull_request.base.ref == vars.FROM_BRANCH
+      )
 
     runs-on: ubuntu-latest
 
