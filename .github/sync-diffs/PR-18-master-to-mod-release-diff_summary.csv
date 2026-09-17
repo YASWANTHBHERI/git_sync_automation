@@ -1,0 +1,122 @@
+file,change_type,line_number,content,conflict
+AccountService.java,ADDITION,1,import java.sql.Connection;,false
+AccountService.java,ADDITION,2,import java.sql.PreparedStatement;,false
+AccountService.java,ADDITION,3,import java.sql.ResultSet;,false
+AccountService.java,ADDITION,4,,false
+AccountService.java,ADDITION,5,/**,false
+AccountService.java,ADDITION,6, * AccountService.java,false
+AccountService.java,ADDITION,7, * Pine Labs Credit Modernization,false
+AccountService.java,ADDITION,8, * New file added via feature/automation branch,false
+AccountService.java,ADDITION,9, * Account balance and status management — PostgreSQL syntax,false
+AccountService.java,ADDITION,10, */,false
+AccountService.java,ADDITION,11,public class AccountService {,false
+AccountService.java,ADDITION,12,,false
+AccountService.java,ADDITION,13,    private Connection conn;,false
+AccountService.java,ADDITION,14,,false
+AccountService.java,ADDITION,15,    public AccountService(Connection conn) {,false
+AccountService.java,ADDITION,16,        this.conn = conn;,false
+AccountService.java,ADDITION,17,    },false
+AccountService.java,ADDITION,18,,false
+AccountService.java,ADDITION,19,    // Get account balance by account ID,false
+AccountService.java,ADDITION,20,    public double getBalance(String accountId) {,false
+AccountService.java,ADDITION,21,        try {,false
+AccountService.java,ADDITION,22,"            String sql = """"""",false
+AccountService.java,ADDITION,23,"                    SELECT COALESCE(balance, 0.00) AS balance",false
+AccountService.java,ADDITION,24,                    FROM accounts,false
+AccountService.java,ADDITION,25,                    WHERE account_id = ?,false
+AccountService.java,ADDITION,26,                    AND status = 'ACTIVE',false
+AccountService.java,ADDITION,27,                    LIMIT 1;,false
+AccountService.java,ADDITION,28,"                    """""";",false
+AccountService.java,ADDITION,29,,false
+AccountService.java,ADDITION,30,            PreparedStatement stmt = conn.prepareStatement(sql);,false
+AccountService.java,ADDITION,31,"            stmt.setString(1, accountId);",false
+AccountService.java,ADDITION,32,            ResultSet rs = stmt.executeQuery();,false
+AccountService.java,ADDITION,33,,false
+AccountService.java,ADDITION,34,"            return rs.next() ? rs.getDouble(""balance"") : 0.00;",false
+AccountService.java,ADDITION,35,,false
+AccountService.java,ADDITION,36,        } catch (Exception e) {,false
+AccountService.java,ADDITION,37,"            System.err.println(""Failed to fetch balance: "" + e.getMessage());",false
+AccountService.java,ADDITION,38,            return 0.00;,false
+AccountService.java,ADDITION,39,        },false
+AccountService.java,ADDITION,40,    },false
+AccountService.java,ADDITION,41,,false
+AccountService.java,ADDITION,42,    // Update account status,false
+AccountService.java,ADDITION,43,"    public boolean updateStatus(String accountId, String status) {",false
+AccountService.java,ADDITION,44,        try {,false
+AccountService.java,ADDITION,45,"            String sql = """"""",false
+AccountService.java,ADDITION,46,                    UPDATE accounts,false
+AccountService.java,ADDITION,47,"                    SET status = ?, last_updated = NOW()",false
+AccountService.java,ADDITION,48,                    WHERE account_id = ?,false
+AccountService.java,ADDITION,49,"                    """""";",false
+AccountService.java,ADDITION,50,,false
+AccountService.java,ADDITION,51,            PreparedStatement stmt = conn.prepareStatement(sql);,false
+AccountService.java,ADDITION,52,"            stmt.setString(1, status);",false
+AccountService.java,ADDITION,53,"            stmt.setString(2, accountId);",false
+AccountService.java,ADDITION,54,,false
+AccountService.java,ADDITION,55,            int rows = stmt.executeUpdate();,false
+AccountService.java,ADDITION,56,            return rows > 0;,false
+AccountService.java,ADDITION,57,,false
+AccountService.java,ADDITION,58,        } catch (Exception e) {,false
+AccountService.java,ADDITION,59,"            System.err.println(""Failed to update status: "" + e.getMessage());",false
+AccountService.java,ADDITION,60,            return false;,false
+AccountService.java,ADDITION,61,        },false
+AccountService.java,ADDITION,62,    },false
+AccountService.java,ADDITION,63,},false
+Main.java,REMOVAL,9, * PINE LABS update (via main → master):,false
+Main.java,REMOVAL,10, *   - ACTIVE customers with phone_number and pagination,false
+Main.java,REMOVAL,11, *   - Conflicts with mod-release which has INACTIVE + credit_limit,false
+Main.java,ADDITION,9, * feature/automation update:,false
+Main.java,ADDITION,10, *   - Added connection timeout handling,false
+Main.java,ADDITION,11, *   - Added logging for failed connections,false
+Main.java,ADDITION,12, *   - Improved result set display with row count,false
+Main.java,ADDITION,20,    private static final int    QUERY_TIMEOUT = 30;,false
+Main.java,ADDITION,26,"        System.out.println(""✓ Database connection established"");",false
+Main.java,REMOVAL,25,        // PINE LABS: ACTIVE customers with phone_number + pagination,false
+Main.java,REMOVAL,26,        // CONFLICTS with mod-release: INACTIVE + credit_limit + no pagination,false
+Main.java,REMOVAL,34,                WHERE status = 'INACTIVE',false
+Main.java,ADDITION,35,                WHERE status = 'ACTIVE',false
+Main.java,REMOVAL,36,                LIMIT 10;,false
+Main.java,ADDITION,37,                LIMIT ? OFFSET ?;,false
+Main.java,ADDITION,41,        stmt.setQueryTimeout(QUERY_TIMEOUT);,false
+Main.java,ADDITION,42,"        stmt.setInt(1, pageSize);",false
+Main.java,ADDITION,43,"        stmt.setInt(2, page * pageSize);",false
+Main.java,ADDITION,49,        int rowCount = 0;,false
+Main.java,ADDITION,51,            rowCount++;,false
+Main.java,ADDITION,59,"        System.out.printf(""%nTotal rows: %d%n"", rowCount);",false
+queries.sql,ADDITION,3,-- feature/automation update:,false
+queries.sql,ADDITION,4,--   Added date range filter parameter,false
+queries.sql,ADDITION,5,--   Added transaction count per customer,false
+queries.sql,ADDITION,6,--   Added index hints for performance,false
+queries.sql,ADDITION,8,-- Get customer transactions with count,false
+queries.sql,REMOVAL,7,"    c.credit_score,",false
+queries.sql,REMOVAL,8,"    c.credit_limit,",false
+queries.sql,ADDITION,12,"    t.transaction_type,",false
+queries.sql,ADDITION,13,"    t.merchant_id,",false
+queries.sql,ADDITION,14,"    t.payment_mode,",false
+queries.sql,REMOVAL,10,"    TO_CHAR(t.created_at, 'YYYY-MM-DD') AS transaction_date",false
+queries.sql,ADDITION,16,"    TO_CHAR(t.created_at, 'YYYY-MM-DD') AS transaction_date,",false
+queries.sql,ADDITION,17,    COUNT(*) OVER (PARTITION BY t.customer_id) AS customer_txn_count,false
+queries.sql,REMOVAL,14,ORDER BY c.credit_score DESC,false
+queries.sql,ADDITION,21,  AND t.status = 'COMPLETED',false
+queries.sql,ADDITION,22,ORDER BY t.amount DESC,false
+queries.sql,ADDITION,25,-- Get account balance summary with last transaction date,false
+queries.sql,REMOVAL,18,"    account_id,",false
+queries.sql,REMOVAL,19,"    COALESCE(balance, 0.00) AS balance,",false
+queries.sql,REMOVAL,20,"    credit_limit,",false
+queries.sql,REMOVAL,21,    last_updated,false
+queries.sql,REMOVAL,22,FROM accounts,false
+queries.sql,REMOVAL,23,WHERE status = 'ACTIVE',false
+queries.sql,REMOVAL,24,ORDER BY credit_limit DESC;,false
+queries.sql,ADDITION,27,"    a.account_id,",false
+queries.sql,ADDITION,28,"    a.account_number,",false
+queries.sql,ADDITION,29,"    a.bank_code,",false
+queries.sql,ADDITION,30,"    COALESCE(a.balance, 0.00) AS balance,",false
+queries.sql,ADDITION,31,"    a.currency,",false
+queries.sql,ADDITION,32,"    a.last_updated,",false
+queries.sql,ADDITION,33,    MAX(t.created_at) AS last_transaction_date,false
+queries.sql,ADDITION,34,FROM accounts a,false
+queries.sql,ADDITION,35,LEFT JOIN transactions t ON a.account_id = t.account_id,false
+queries.sql,ADDITION,36,WHERE a.status = 'ACTIVE',false
+queries.sql,ADDITION,37,"GROUP BY a.account_id, a.account_number, a.bank_code,",false
+queries.sql,ADDITION,38,"         a.balance, a.currency, a.last_updated",false
+queries.sql,ADDITION,39,ORDER BY a.balance DESC;,false
