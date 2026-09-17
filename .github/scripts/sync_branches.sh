@@ -7,15 +7,15 @@
 #   - diff_summary.csv   : structured line-by-line change breakdown
 #   - conflict_flag.txt  : conflict=true or conflict=false
 #
-# Usage  : bash sync_branches.sh <from_branch> <to_branch>
-# Example: bash sync_branches.sh master release
+# Usage  : bash .github/scripts/sync_branches.sh <from_branch> <to_branch>
+# Example: bash .github/scripts/sync_branches.sh master mod-release
 # ─────────────────────────────────────────────────────────────────────────────
 set -e
 
 # ── Validate arguments ────────────────────────────────────────────────────────
 if [ -z "$1" ] || [ -z "$2" ]; then
   echo "❌ ERROR: Both from_branch and to_branch are required."
-  echo "   Usage: bash sync_branches.sh <from_branch> <to_branch>"
+  echo "   Usage: bash .github/scripts/sync_branches.sh <from_branch> <to_branch>"
   exit 1
 fi
 
@@ -83,7 +83,7 @@ echo ""
 echo "→ [4/4] Parsing diff into CSV..."
 
 CONFLICT_VAL=$(cat conflict_flag.txt | cut -d'=' -f2)
-python3 scripts/parse_diff.py raw_diff.patch diff_summary.csv ${CONFLICT_VAL}
+python3 .github/scripts/parse_diff.py raw_diff.patch diff_summary.csv ${CONFLICT_VAL}
 
 echo "  ✓ CSV rows: $(($(wc -l < diff_summary.csv) - 1))"
 

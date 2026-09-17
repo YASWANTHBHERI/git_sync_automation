@@ -6,7 +6,7 @@ Parses a raw git diff (unified diff format) into a structured CSV
 file that Kiro can read and understand.
 
 Usage:
-    python3 parse_diff.py <patch_file> <output_csv> <conflict_flag>
+    python3 .github/scripts/parse_diff.py <patch_file> <output_csv> <conflict_flag>
 
 Arguments:
     patch_file    : Path to the raw git diff file (e.g. raw_diff.patch)
@@ -118,8 +118,8 @@ def parse_diff_to_csv(patch_file: str, output_csv: str, conflict_flag: str) -> N
 
 if __name__ == '__main__':
     if len(sys.argv) != 4:
-        print("Usage: python3 parse_diff.py <patch_file> <output_csv> <conflict_flag>")
-        print("Example: python3 parse_diff.py raw_diff.patch diff_summary.csv false")
+        print("Usage: python3 .github/scripts/parse_diff.py <patch_file> <output_csv> <conflict_flag>")
+        print("Example: python3 .github/scripts/parse_diff.py raw_diff.patch diff_summary.csv false")
         sys.exit(1)
 
     parse_diff_to_csv(

@@ -157,8 +157,8 @@ jobs:
       # ── Step 5: Run sync script — fetch, simulate, generate CSV ──────────────
       - name: Run sync script
         run: |
-          chmod +x scripts/sync_branches.sh
-          bash scripts/sync_branches.sh \
+          chmod +x .github/scripts/sync_branches.sh
+          bash .github/scripts/sync_branches.sh \
             ${{ steps.config.outputs.from_branch }} \
             ${{ steps.config.outputs.to_branch }}
 
