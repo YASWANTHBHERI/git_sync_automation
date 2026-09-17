@@ -2,42 +2,52 @@
 
 ## Overview
 
-This automation keeps two branches in sync by detecting when changes land on a
-source branch and automatically merging them into a target branch. If the merge
-is clean it happens fully automatically. If there are conflicts a PR is raised
-and the team is notified.
+This automation keeps two branches in sync. When a PR is merged into the source branch, GitHub Actions automatically detects the changes, simulates the merge, and either applies it directly or raises a conflict PR — without any manual intervention.
+
+**Built for:** Pine Labs Credit / Modernization project  
+**Migration context:** Oracle → PostgreSQL conversion using IBATIS, JDBC, and JPA frameworks
+
+---
+
+## How It Works
 
 ```
-PR merged into FROM_BRANCH
+PR merged into master (source branch)
         ↓
-GitHub Actions triggers
+GitHub Actions triggers automatically
         ↓
-Simulate merge (git merge-tree)
+Fetches both branches
+Simulates merge in memory (git merge-tree — dry run, touches nothing)
+Generates diff_summary.csv
         ↓
-    Clean?              Conflict?
-      ↓                     ↓
-Merge directly        Raise conflict PR
-into TO_BRANCH        notify team
-      ↓                     ↓
-Commit CSV            Commit CSV
-Send notification     Send notification
-(sync-success)        (sync-conflict)
+    No conflicts?              Conflicts detected?
+        ↓                              ↓
+Merges master directly         Raises a PR from
+into mod-release               master → mod-release
+(fully automatic)              (manual review required)
+        ↓                              ↓
+Commits CSV to                 Commits CSV to
+configured branch              configured branch
+        ↓                              ↓
+Creates GitHub issue           Creates GitHub issue
+with sync-success label        with sync-conflict label
+Notifies configured users      Notifies configured users
 ```
 
 ---
 
 ## Repository File Structure
 
+These files must exist in your repository for the automation to work:
+
 ```
 your-repo/
 ├── .github/
-│   ├── workflows/
-│   │   └── sync.yml              ← GitHub Actions workflow (must be on FROM_BRANCH)
-│   └── sync-diffs/               ← diff CSVs saved here (auto-created by automation)
-│       └── PR-*-diff_summary.csv
+│   └── workflows/
+│       └── sync.yml              ← GitHub Actions workflow (must be on default branch)
 └── scripts/
-    ├── sync_branches.sh          ← fetches, simulates, generates diff
-    └── parse_diff.py             ← parses raw diff into CSV
+    ├── sync_branches.sh           ← fetches branches, simulates merge, generates diff
+    └── parse_diff.py             ← parses raw git diff into structured CSV
 ```
 
 ---
@@ -46,16 +56,18 @@ your-repo/
 
 Before setting up, make sure you have:
 
-- [ ] A GitHub repository with at least two branches to sync
-- [ ] Admin access to the repository (for Settings)
-- [ ] Git installed locally
-- [ ] Python 3.11+ available (used by GitHub Actions runner — no local install needed)
+- A GitHub repository with at least two branches to sync
+- Admin access to the repository (for Settings)
+- Python 3.11 or higher (used by GitHub Actions runner — no local install needed)
+- Git 2.38 or higher on the GitHub Actions runner (ubuntu-latest satisfies this)
 
 ---
 
-## Step 1: Copy the Automation Files into Your Repo
+## Step-by-Step Setup
 
-Copy these three files into your repository maintaining the exact folder structure:
+### Step 1: Copy the automation files into your repository
+
+Copy these three files from this project into your repository maintaining the same folder structure:
 
 ```
 .github/workflows/sync.yml
@@ -63,8 +75,7 @@ scripts/sync_branches.sh
 scripts/parse_diff.py
 ```
 
-### Important
-`sync.yml` **must** be committed to the **default branch** of your repo (usually `master` or `main`). GitHub Actions only reads workflow files from the default branch.
+Commit and push them to your **default branch** (master):
 
 ```bash
 git add .github/workflows/sync.yml
@@ -74,9 +85,11 @@ git commit -m "feat: add git sync automation"
 git push origin master
 ```
 
+> **Important:** `sync.yml` must be on the default branch. GitHub Actions only reads workflow files from there.
+
 ---
 
-## Step 2: Configure GitHub Actions Permissions
+### Step 2: Configure GitHub Actions permissions
 
 Go to your repository on GitHub:
 
@@ -84,20 +97,18 @@ Go to your repository on GitHub:
 Settings → Actions → General
 ```
 
-Enable both of these:
+Make sure these are enabled:
 
-- [x] **Read and write permissions** (under Workflow permissions)
-- [x] **Allow GitHub Actions to create and approve pull requests**
+- ✅ **Read and write permissions** (under Workflow permissions)
+- ✅ **Allow GitHub Actions to create and approve pull requests**
 
-Without these the workflow cannot push to branches or create PRs/issues.
+Without these, the automation cannot push branches, create PRs, or create issues.
 
 ---
 
-## Step 3: Set Up Repository Variables
+### Step 3: Set up Repository Variables
 
-All configuration is done through GitHub Repository Variables — no hardcoded
-values in the workflow file. This means you can change branches without touching
-any code.
+This is where you configure all branch names and notification settings. No hardcoded values exist in the workflow file — everything comes from here.
 
 Go to:
 
@@ -107,368 +118,154 @@ Settings → Secrets and variables → Actions → Variables tab → New reposit
 
 Add these four variables:
 
-| Variable Name | Description | Example |
+| Variable Name | Description | Example Value |
 |---|---|---|
 | `FROM_BRANCH` | Branch changes come FROM | `master` |
 | `TO_BRANCH` | Branch changes go INTO | `mod-release` |
 | `CSV_BRANCH` | Branch where diff CSV is saved | `mod-release` |
-| `NOTIFY_USERS` | GitHub usernames to notify (comma-separated) | `user1, user2` |
+| `NOTIFY_USERS` | GitHub usernames to notify (comma separated) | `user1, user2` |
 
-### Notes on NOTIFY_USERS
-- Multiple usernames are supported — separate with commas
-- Spaces after commas are allowed: `user1, user2` works fine
-- These users will be @mentioned in the issue body and assigned to the issue
-- They will receive a GitHub email notification automatically
+> **To change branch names later:** Just update the variables here. No code changes, no push to master needed.
 
-### To change configuration later
-Just update the variable value on GitHub — no code change, no push to master needed.
+> **Multiple notify users:** Comma separated values are supported. Spaces after commas are allowed.
+> Example: `YASWANTHBHERI, bheri-yaswanth_pinegit`
 
 ---
 
-## Step 4: Create Required Labels
+### Step 4: Create GitHub issue labels
 
-The workflow creates these labels automatically on first run. But if you want to
-create them manually upfront:
+The automation creates GitHub issues with labels to track sync status. These labels need to exist in your repo.
+
+Go to:
 
 ```
-GitHub repo → Issues → Labels → New label
+Issues tab → Labels → New label
 ```
 
-| Label | Color | Description |
+Create these two labels:
+
+| Label Name | Color | Description |
 |---|---|---|
 | `sync-success` | `#0075ca` (blue) | Branch sync completed successfully |
 | `sync-conflict` | `#e4e669` (yellow) | Branch sync conflict — manual review needed |
 
----
-
-## Step 5: Verify Your Branch Setup
-
-Make sure the branches you configured exist on remote:
-
-```bash
-git branch -a | grep -E "FROM_BRANCH|TO_BRANCH"
-```
-
-If a branch doesn't exist, create and push it:
-
-```bash
-git checkout -b mod-release
-git push origin mod-release
-```
+> **Note:** The workflow also auto-creates these labels on first run if they don't exist. But creating them manually ensures they are available from the start.
 
 ---
 
-## How the Automation Triggers
+### Step 5: Verify the workflow appears in Actions tab
+
+Go to your repository on GitHub:
+
+```
+Actions tab
+```
+
+You should see **Git Sync Automation** listed under workflows. If it appears, GitHub has successfully detected and registered the workflow.
+
+---
+
+## How Triggers Work
 
 ### Automatic trigger
-The workflow fires automatically when a PR is merged into `FROM_BRANCH`.
+
+The workflow fires automatically whenever a PR is merged into `FROM_BRANCH` (your configured source branch). It does not trigger for PRs merged into any other branch.
 
 ```
-Developer raises PR → PR gets merged into FROM_BRANCH → workflow triggers
+PR opened → PR merged into master → workflow triggers → syncs to mod-release
+PR opened → PR merged into mod-release → workflow does NOT trigger
 ```
-
-The workflow only runs when:
-- The PR was actually **merged** (not just closed)
-- The PR's **base branch** matches `FROM_BRANCH` variable
-
-This prevents the workflow from triggering on PRs merged into other branches
-(e.g. merging into `TO_BRANCH` will not trigger the workflow).
 
 ### Manual trigger
-You can also trigger the workflow manually for any branch combination:
+
+You can trigger the workflow manually for any branch combination without changing the repo variables:
 
 ```
-GitHub repo → Actions tab → Git Sync Automation → Run workflow
+GitHub → Actions tab
+  → Git Sync Automation
+  → Run workflow button (top right)
 ```
 
-In the form that appears:
-- Leave all fields **blank** to use your configured repo variables
-- Type a value to **override** for that single run only
+A form appears with these fields:
 
-This is useful for:
-- Testing the automation
-- One-off syncs between branches not in the default config
-- Re-running after a failure
-
----
-
-## What Happens on Each Run
-
-### Step-by-step breakdown
-
-| Step | What it does |
+| Field | What to enter |
 |---|---|
-| Resolve inputs | Reads repo variables or dispatch inputs, validates all required values |
-| Checkout repository | Clones repo with full git history (`fetch-depth: 0`) — required for merge-tree |
-| Set up Python | Installs Python 3.11 for CSV generation |
-| Ensure labels exist | Creates `sync-success` and `sync-conflict` labels if missing |
-| Run sync script | Fetches branches, simulates merge, generates CSV and conflict flag |
-| Check results | Determines if there are changes and whether conflicts exist |
-| Merge (clean path) | Directly merges `FROM_BRANCH` into `TO_BRANCH` |
-| Create conflict PR (conflict path) | Raises PR from `FROM_BRANCH` → `TO_BRANCH` |
-| Commit CSV | Saves `diff_summary.csv` to `CSV_BRANCH/.github/sync-diffs/` |
-| Send notifications | Creates GitHub issue with `sync-success` or `sync-conflict` label |
-| Print summary | Logs final run summary to Actions console |
+| Source branch | Leave blank to use `FROM_BRANCH` variable, or type a branch name |
+| Target branch | Leave blank to use `TO_BRANCH` variable, or type a branch name |
+| CSV branch | Leave blank to use `CSV_BRANCH` variable, or type a branch name |
+| Notify users | Leave blank to use `NOTIFY_USERS` variable, or type usernames |
+
+Leaving all fields blank uses your repo variables — useful for a quick manual sync. Typing values overrides for that single run only.
 
 ---
 
-## Output Artifacts
+## What Happens After Each Run
 
-For every sync event a CSV file is saved to `CSV_BRANCH` under `.github/sync-diffs/`:
+### Clean merge (no conflicts)
 
 ```
-.github/sync-diffs/
-  PR-{number}-{from_branch}-to-{to_branch}-diff_summary.csv
+✅ master merged into mod-release automatically
+✅ diff_summary.csv committed to configured CSV branch
+✅ GitHub issue created with sync-success label
+✅ Configured users assigned and notified via email
 ```
 
-### CSV columns
+No action required from the team.
 
-| Column | Description | Example |
-|---|---|---|
-| `file` | File path that changed | `src/dao/UserDao.java` |
-| `change_type` | Type of change | `ADDITION` or `REMOVAL` |
-| `line_number` | Line number in the file | `42` |
-| `content` | The actual line content | `SELECT * FROM users LIMIT 10` |
-| `conflict` | Whether this file has a conflict | `true` or `false` |
+### Conflict detected
 
----
-
-## Clean Path — What Happens
-
-When `git merge-tree` detects no conflicts:
-
-1. `FROM_BRANCH` is merged directly into `TO_BRANCH`
-2. Commit message: `sync: merge {FROM} into {TO} (PR #{number}) [auto]`
-3. CSV committed to `CSV_BRANCH/.github/sync-diffs/`
-4. GitHub issue created with `sync-success` label
-5. Configured users notified and assigned to the issue
-
-**No human intervention required.**
-
----
-
-## Conflict Path — What Happens
-
-When `git merge-tree` detects conflicts:
-
-1. `TO_BRANCH` is **NOT modified** — nothing is auto-merged
-2. A PR is raised directly from `FROM_BRANCH` → `TO_BRANCH`
-   - Title: `⚠️ CONFLICT: {FROM} → {TO} (PR #{number})`
-   - Body contains: conflicting files list, steps to resolve, @mentions
-   - If a conflict PR already exists between the same branches it is skipped (no duplicate)
-3. CSV committed to `CSV_BRANCH/.github/sync-diffs/`
-4. GitHub issue created with `sync-conflict` label
-5. Configured users notified and assigned
-
-**Human intervention required to resolve and merge.**
-
----
-
-## How to Resolve Conflicts Manually
-
-When a conflict PR is raised, follow these steps:
-
-```bash
-# 1. Switch to the target branch and pull latest
-git checkout <TO_BRANCH>
-git pull origin <TO_BRANCH>
-
-# 2. Fetch the source branch
-git fetch origin <FROM_BRANCH>
-
-# 3. Attempt the merge — conflicts will appear here
-git merge origin/<FROM_BRANCH>
-
-# 4. Open conflicting files and resolve
-# Look for conflict markers:
-# <<<<<<< HEAD           ← your TO_BRANCH version
-# ... your changes ...
-# =======                ← separator
-# ... incoming changes ...
-# >>>>>>> origin/FROM    ← FROM_BRANCH version
-
-# Edit the files to keep the correct version, then:
-
-# 5. Stage resolved files
-git add <resolved-file-1> <resolved-file-2>
-
-# 6. Complete the merge commit
-git commit -m "fix: resolve merge conflicts from <FROM_BRANCH>"
-
-# 7. Push the resolution
-git push origin <TO_BRANCH>
-
-# 8. Close the conflict PR on GitHub (it no longer needs merging)
 ```
+⚠️ mod-release NOT modified — no automatic merge
+⚠️ Conflict PR raised: master → mod-release
+⚠️ diff_summary.csv committed to configured CSV branch
+⚠️ GitHub issue created with sync-conflict label
+⚠️ Configured users assigned and notified via email
+```
+
+A developer must manually resolve the conflicts and merge the PR.
 
 ---
 
 ## Notifications
 
-Notifications are sent as GitHub issues.
+Notifications are sent as **GitHub Issues** assigned to the configured users. GitHub automatically sends an email to each assigned user's registered GitHub email address.
 
-### sync-success issue (clean merge)
-```
-Title:  ✅ Sync: master → mod-release (PR #42)
-Label:  sync-success
-Body:   Merge completed. Diff summary location. @mentions.
-```
+- **Clean merge:** Issue titled `✅ Sync: master → mod-release (PR #X)`
+- **Conflict:** Issue titled `⚠️ Conflict: master → mod-release (PR #X)`
 
-### sync-conflict issue (conflict detected)
+To update who receives notifications, go to:
+
 ```
-Title:  ⚠️ Conflict: master → mod-release (PR #42)
-Label:  sync-conflict
-Body:   Conflict details. Action required. @mentions.
+Settings → Secrets and variables → Actions → Variables tab
 ```
 
-All users listed in `NOTIFY_USERS` are:
-- @mentioned in the issue body
-- Assigned to the issue
-- Sent a GitHub email notification (based on their GitHub notification settings)
+Update `NOTIFY_USERS` with the new comma-separated list of GitHub usernames. No code change needed.
 
 ---
 
-## Multi-Repo Usage
+## Reusing Across Multiple Repositories
 
-The same three files work across any number of repositories. Each repo gets its
-own independent set of variables.
+The same three files work in any repository. Each repo has its own independent configuration.
 
-```
-repo-A                    repo-B                    repo-C
-─────────────             ─────────────             ─────────────
-FROM_BRANCH=master        FROM_BRANCH=main          FROM_BRANCH=develop
-TO_BRANCH=staging         TO_BRANCH=release         TO_BRANCH=qa
-CSV_BRANCH=staging        CSV_BRANCH=release        CSV_BRANCH=qa
-NOTIFY_USERS=alice        NOTIFY_USERS=bob,carol    NOTIFY_USERS=dave
-```
+For each new repository:
 
-Same `sync.yml`, `sync_branches.sh`, `parse_diff.py` — different behavior per repo.
+1. Copy `.github/workflows/sync.yml`, `scripts/sync_branches.sh`, `scripts/parse_diff.py`
+2. Push to that repo's default branch
+3. Set the four repository variables with the correct branch names for that repo
+4. Configure Actions permissions (Step 2)
+5. Create the two labels (Step 4)
+
+Each repo reads its own variables independently — changing variables in one repo does not affect any other repo.
 
 ---
 
-## Changing Configuration
+## Branch Structure (Pine Labs Project Reference)
 
-### Change branch names
-```
-GitHub → Settings → Secrets and variables → Actions → Variables tab
-Edit FROM_BRANCH or TO_BRANCH → Save
-```
-Next workflow run picks up the new values automatically.
+| Branch | Owner | Purpose |
+|---|---|---|
+| `master` | Pine Labs team | Production source — never push here directly |
+| `mod-release` | Our team | Stable base — receives changes from master via this automation |
+| `mod` | Our developers | Active Oracle→Postgres conversion work |
 
-### Add or remove notification users
-```
-GitHub → Settings → Secrets and variables → Actions → Variables tab
-Edit NOTIFY_USERS → comma-separated usernames → Save
-```
-Spaces after commas are allowed: `user1, user2, user3`
-
-### Temporarily override for one run
-```
-GitHub → Actions → Git Sync Automation → Run workflow
-Type values in the form fields → Run workflow
-```
-These override the repo variables for that single run only.
-
----
-
-## Troubleshooting
-
-### Workflow not triggering on PR merge
-- Verify `sync.yml` is on the default branch (master/main)
-- Check that `FROM_BRANCH` variable matches the exact branch name the PR merged into
-- Confirm GitHub Actions permissions are set to Read and write
-
-### FROM_BRANCH or TO_BRANCH not set error
-```
-❌ ERROR: FROM_BRANCH is not set.
-   Go to: Settings → Secrets and variables → Actions → Variables
-   Add variable: FROM_BRANCH = <your branch name>
-```
-Go to Settings → Variables and add the missing variable.
-
-### Conflict PR not created
-- Check Actions logs for the "Create conflict PR" step
-- If it shows "Conflict PR already exists" — a PR between those branches is already open, close it first
-- Verify `GITHUB_TOKEN` has permission to create PRs (Settings → Actions → General)
-
-### CSV not committed to CSV_BRANCH
-- The CSV step uses `if: always()` so it should always run
-- Check that `CSV_BRANCH` variable is set and the branch exists on remote
-- Check Actions logs for the "Commit diff_summary.csv" step for error details
-
-### Notification issue not created
-- The notification step uses `if: always()` so it should always run
-- Verify `sync-success` and `sync-conflict` labels exist in your repo
-- Check that `GITHUB_TOKEN` has permission to create issues
-
-### Branches already in sync — nothing happens
-This is expected behavior. If `FROM_BRANCH` and `TO_BRANCH` are identical the
-workflow detects no changes and exits cleanly. No merge, no CSV, no notification.
-
----
-
-## Important Rules
-
-1. **Never push directly to `FROM_BRANCH`** if it is owned by another team
-2. **Never modify `TO_BRANCH` without going through the automation** or manual PR
-3. **Branch names are fully dynamic** — always read from repo variables, never hardcoded
-4. **CSV files are the audit trail** — one per sync event, stored in `CSV_BRANCH`
-5. **Conflict = human required** — nothing is auto-merged when conflicts exist
-6. **The workflow only triggers on `FROM_BRANCH` merges** — merges into other branches do not trigger it
-
----
-
-## Scripts Reference
-
-### sync_branches.sh
-
-```
-Usage: bash sync_branches.sh <from_branch> <to_branch>
-
-What it does:
-  1. git fetch origin <from_branch>
-  2. git fetch origin <to_branch>
-  3. git merge-tree — simulate merge in memory (dry run, touches nothing)
-  4. git diff — generate raw_diff.patch
-  5. python3 parse_diff.py — parse patch into diff_summary.csv
-
-Outputs:
-  diff_summary.csv    — structured change breakdown
-  conflict_flag.txt   — conflict=true or conflict=false
-  raw_diff.patch      — raw git diff (intermediate file)
-  merge_result.txt    — merge-tree output (intermediate file)
-```
-
-### parse_diff.py
-
-```
-Usage: python3 parse_diff.py <patch_file> <output_csv> <conflict_flag>
-
-What it does:
-  Parses a unified git diff into a structured CSV with columns:
-  file, change_type, line_number, content, conflict
-
-Arguments:
-  patch_file    : raw diff file (raw_diff.patch)
-  output_csv    : output CSV path (diff_summary.csv)
-  conflict_flag : true or false — from conflict_flag.txt
-```
-
----
-
-## Quick Checklist — New Repo Setup
-
-```
-☐ Copy sync.yml to .github/workflows/
-☐ Copy sync_branches.sh to scripts/
-☐ Copy parse_diff.py to scripts/
-☐ Commit and push all three files to master/default branch
-☐ Settings → Actions → General → Read and write permissions ✓
-☐ Settings → Actions → General → Allow creating PRs ✓
-☐ Settings → Variables → Add FROM_BRANCH
-☐ Settings → Variables → Add TO_BRANCH
-☐ Settings → Variables → Add CSV_BRANCH
-☐ Settings → Variables → Add NOTIFY_USERS
-☐ Verify both FROM_BRANCH and TO_BRANCH exist on remote
-☐ Test with manual workflow_dispatch run
-```
+**This automation handles:** `master` → `mod-release` only  
+**Separate process:** `mod-release` → `mod` (manual, per sprint)
