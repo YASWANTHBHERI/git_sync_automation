@@ -4,8 +4,6 @@
 
 This automation keeps two branches in sync. When a PR is merged into the source branch, GitHub Actions automatically detects the changes, simulates the merge, and either applies it directly or raises a conflict PR — without any manual intervention.
 
-**Built for:** Pine Labs Credit / Modernization project  
-**Migration context:** Oracle → PostgreSQL conversion using IBATIS, JDBC, and JPA frameworks
 
 ---
 
@@ -266,6 +264,3 @@ Each repo reads its own variables independently — changing variables in one re
 | `master` | Pine Labs team | Production source — never push here directly |
 | `mod-release` | Our team | Stable base — receives changes from master via this automation |
 | `mod` | Our developers | Active Oracle→Postgres conversion work |
-
-**This automation handles:** `master` → `mod-release` only  
-**Separate process:** `mod-release` → `mod` (manual, per sprint)
