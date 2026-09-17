@@ -29,28 +29,25 @@ public class Main {
 
         String query = """
                 SELECT customer_id, COALESCE(email, 'no-email') AS email,
-                       status, last_login, phone_number
+                       account_type, credit_limit
                 FROM customers
-                WHERE status = 'ACTIVE'
-                ORDER BY last_login DESC
-                LIMIT ? OFFSET ?;
+                WHERE status = 'INACTIVE'
+                ORDER BY credit_limit DESC
+                LIMIT 10;
                 """;
 
         PreparedStatement stmt = conn.prepareStatement(query);
-        stmt.setInt(1, pageSize);
-        stmt.setInt(2, page * pageSize);
         ResultSet rs = stmt.executeQuery();
 
-        System.out.println("Customer ID | Email                | Status | Last Login  | Phone");
-        System.out.println("──────────────────────────────────────────────────────────────────");
+        System.out.println("Customer ID | Email                | Account Type | Credit Limit");
+        System.out.println("────────────────────────────────────────────────────────────────");
 
         while (rs.next()) {
-            System.out.printf("%-12s | %-20s | %-6s | %-11s | %s%n",
+            System.out.printf("%-12s | %-20s | %-12s | %s%n",
                 rs.getString("customer_id"),
                 rs.getString("email"),
-                rs.getString("status"),
-                rs.getString("last_login"),
-                rs.getString("phone_number")
+                rs.getString("account_type"),
+                rs.getString("credit_limit")
             );
         }
 
