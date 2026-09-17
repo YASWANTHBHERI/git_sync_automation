@@ -6,51 +6,44 @@ import java.sql.ResultSet;
 /**
  * Main.java
  * Pine Labs Credit Modernization
- * Updated by MOD team — added connection pooling using HikariCP
+ * Updated by Pine Labs team on master — added status filter and new sort order
  */
 public class Main {
 
-    // PostgreSQL datasource config — mod team added HikariCP pooling
-    private static final String DB_URL      = "jdbc:postgresql://localhost:5432/pinelabs";
+    // PostgreSQL datasource config
+    private static final String DB_URL      = "jdbc:postgresql://prod-db.pinelabs.com:5432/pinelabs";
     private static final String DB_DRIVER   = "org.postgresql.Driver";
-    private static final String DB_USER     = "pinelabs_user";
+    private static final String DB_USER     = "pinelabs_prod_user";
     private static final String DB_PASSWORD = "secret";
-    private static final int    POOL_SIZE   = 20;  // mod team added this
 
     public static void main(String[] args) throws Exception {
 
-        // mod team refactored to use HikariCP connection pool
-        com.zaxxer.hikari.HikariConfig config = new com.zaxxer.hikari.HikariConfig();
-        config.setJdbcUrl(DB_URL);
-        config.setUsername(DB_USER);
-        config.setPassword(DB_PASSWORD);
-        config.setMaximumPoolSize(POOL_SIZE);
+        Class.forName(DB_DRIVER);
+        Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
-        com.zaxxer.hikari.HikariDataSource ds = new com.zaxxer.hikari.HikariDataSource(config);
-        Connection conn = ds.getConnection();
-
-        // mod team changed query — different sort order and columns
-        // This CONFLICTS with master's addition of status filter
+        // Pine Labs team — added status=ACTIVE filter and last_login sort
+        // CONFLICTS with mod-release which uses HikariCP and credit_limit sort
         String query = """
                 SELECT customer_id, COALESCE(email, 'no-email') AS email,
-                       account_type, credit_limit
+                       status, last_login
                 FROM customers
-                ORDER BY credit_limit DESC
+                WHERE status = 'ACTIVE'
+                ORDER BY last_login DESC
                 LIMIT 10;
                 """;
 
         PreparedStatement stmt = conn.prepareStatement(query);
         ResultSet rs = stmt.executeQuery();
 
-        System.out.println("Customer ID | Email                | Account Type | Credit Limit");
-        System.out.println("────────────────────────────────────────────────────────────────");
+        System.out.println("Customer ID | Email                | Status | Last Login");
+        System.out.println("────────────────────────────────────────────────────────");
 
         while (rs.next()) {
-            System.out.printf("%-12s | %-20s | %-12s | %s%n",
+            System.out.printf("%-12s | %-20s | %-6s | %s%n",
                 rs.getString("customer_id"),
                 rs.getString("email"),
-                rs.getString("account_type"),
-                rs.getString("credit_limit")
+                rs.getString("status"),
+                rs.getString("last_login")
             );
         }
 
